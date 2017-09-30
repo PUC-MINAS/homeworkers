@@ -1,5 +1,31 @@
 @charset "UTF-8";
 body {
-  background-color: #FAFAD2;
+  background-color: fff5ee;
   font-family: Arial;
+}
+
+.clear {
+	clear: both;
+}
+
+header {
+	position: fixed;
+	left: -8px;
+	top: -21px;
+	background-color: red; 
+	width: 100%;
+	padding: 15px;
+	
+}
+
+div.icons img {
+	width: 40px;
+	height: 40px;
+	border: 1px solid black;
+}
+
+#corpo {
+	position: relative;
+	top: 100px;
+	padding: 50px;
 }
