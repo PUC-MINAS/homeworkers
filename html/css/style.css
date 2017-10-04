@@ -49,6 +49,44 @@ div.icons img {
 	margin-top: 100px;	
 }
 
+/*index*/
+div.bprofissional{
+	color: #004466;
+	background-color: #fdeddd;
+	width: 125px;
+	height: 125px;
+	display: inline-grid;
+	border: 2px solid #cc5200;
+	padding: 8px;
+	margin:16px;
+	text-align: center;
+	
+}
+#bpedreiro{
+	
+}
+
+#bbombeirohidraulico{
+
+}
+
+#bdiarista{
+	
+}
+
+#bjardineiro{
+	
+}
+
+#bpintor{
+	
+}
+
+#beletricista{
+	
+}
+/*index*/
+
 
 footer {
 	position: absolute;
