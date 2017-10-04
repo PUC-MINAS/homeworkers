@@ -47,6 +47,7 @@ div.icons img {
 
 #corpo {
 	margin-top: 100px;	
+	margin-bottom: 200px;
 }
 
 /*index*/
@@ -89,7 +90,7 @@ div.bprofissional{
 
 
 footer {
-	position: absolute;
+	position: fixed;
 	bottom:0;
 	font-size: 0.9em;
 	width: 100%;
