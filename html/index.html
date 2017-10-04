@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html>
-<!--
-Pagina inicial
--->
+<!-- Pagina inicial -->
 <head>
 	<meta charset='utf-8'/>
 	<link rel="stylesheet" type="text/css" href="css/style.css"/>
-	<title>homeWorker</title>
+	<title>HomeWorker</title>
 </head>
 <body>
 	<header>
@@ -19,13 +17,45 @@ Pagina inicial
 			<img src="" alt="perfil" />
 		</div>
 	</header>
-  <div id="corpo">
-  
-  </div>
-  <footer>
+	<div id="corpo">
+		<div class="bprofissional"  id="pedreiro">
+			<h3>Pedreiro</h3>
+			<img src="https://ninjastorage.blob.core.windows.net/companyfiles/19492607/6c3c81f9-9dfd-46b1-afbe-ff2e1d729c65.png"width="125px"height="125px">
+		</div>
+		<div class="bprofissional" id="bombeirohidraulico">
+			<h3>Bombeiro Hidraulico</h3>
+		</div>
+		<div class="bprofissional" id="diarista">
+			<h3>Diarista</h3>
+		</div>
+		<div class="bprofissional" id="jardineiro">
+			<h3>Jardineiro</h3>
+		</div>
+		<div class="bprofissional" id="Pintor">
+			<h3>Pintor</h3>
+		</div>
+		<div class="bprofissional" id="eletricista">
+			<h3>Eletricista</h3>
+		</div>
+	</div>
+	<footer>
 		<p>
 			homeWorker - 2017 | TIS-I Trabalho Interdisciplinar de Software
 		</p>
 	</footer>
+	
+	<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+	<script>
+		// Initialize Firebase
+		var config = {
+		apiKey: "AIzaSyCyow_8px4wwTbK3eKZddx8OZV77XQCuGI",
+		authDomain: "homeworker-tis.firebaseapp.com",
+		databaseURL: "https://homeworker-tis.firebaseio.com",
+		projectId: "homeworker-tis",
+		storageBucket: "homeworker-tis.appspot.com",
+		messagingSenderId: "609257770390"
+	};
+	firebase.initializeApp(config);
+	</script>
 </body>
 </html>
