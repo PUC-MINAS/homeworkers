@@ -1,0 +1,18 @@
+@charset "utf-8";
+
+#corpo{
+	width: 50%;
+	min-width: 250px;
+	margin: 0 auto;
+	margin-top: 100px;
+	margin-bottom: 100px;
+	text-align: center;
+}
+
+.input-cadastro {
+	width: 200px;
+	height: 20px;
+	padding: 3px;
+	margin : 3px;
+	font-size: 10pt;
+}
