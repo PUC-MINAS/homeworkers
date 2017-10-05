@@ -16,3 +16,12 @@
 	margin : 3px;
 	font-size: 10pt;
 }
+
+.div-login, .div-cadastro {
+	height: 300px;
+	min-width: : 250px;
+	background-color: white;
+	border: 1px solid black;
+	box-shadow: 1px;
+	margin: 10px;
+}

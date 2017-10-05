@@ -17,24 +17,30 @@ Tela para cadastro
 		<div class="icons">
 			<a href="index.html" class="a-noformat"><img src="" alt="home" /></a>
 			<a href="pesquisa.html" class="a-noformat"><img src="" alt="maps" /></a>
-			<a href="dadoscadastrais.html" class="a-noformat"><img src="" alt="perfil" /></a>
+			<a href="login.html" class="a-noformat"><img src="" alt="Entrar" /></a>
+			<a href="cadastro.html" class="a-noformat"><img src="" alt="Cadastrar" /></a>
 		</div>
 	</header>
   	<div id="corpo">
-  		<form method="post" action="">
-  			<p>
-  				<input class="input-cadastro" type="text" name="nome" placeholder="Nome"/><br/>
-  				<input class="input-cadastro" type="text" name="sobrenome" placeholder="Sobrenome"/>
-  			</p>
-  			<p>
-  				<input class="input-cadastro" type="email" name="email" placeholder="Digite seu email"/><br/>
-  				<input class="input-cadastro" type="password" name="senha" placeholder="Digite sua senha"/><br/>
-  				<input class="input-cadastro" type="password" name="confirmasenha" placeholder="Confirme sua senha"/>
-  			</p>
-  			<p>
-  				<input type="submit" name="submit"/>
-  			</p>
-  		</form>
+  		<div class="div-cadastro">
+  			<h2>Cadastrar</h2>
+	  		<form method="post" action="">
+	  			<p>
+	  				<input class="input-cadastro" type="text" name="nome" placeholder="Nome"/><br/>
+	  				<input class="input-cadastro" type="text" name="sobrenome" placeholder="Sobrenome"/><br/>
+	  				<label for="profissional">Profissional</label> <input type="radio" name="tipo" value="profissional" id="profissional">
+	  				<label for="cliente">Cliente</label> <input type="radio" name="tipo" value="cliente" id="cliente">
+	  			</p>
+	  			<p>
+	  				<input class="input-cadastro" type="email" name="email" placeholder="Digite seu email"/><br/>
+	  				<input class="input-cadastro" type="password" name="senha" placeholder="Digite sua senha"/><br/>
+	  				<input class="input-cadastro" type="password" name="confirmasenha" placeholder="Confirme sua senha"/><br/>
+	  			</p>
+	  			<p>
+	  				<input type="submit" name="submit"/>
+	  			</p>
+	  		</form>
+  		</div>
   
   	</div>
   	<footer>
