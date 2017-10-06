@@ -47,7 +47,17 @@ function cadastrar(){
 							tipo: "",
 							email: "",
 							senha: "",
-							sexo: ""
+							sexo: "" ,
+							data_nascimento: "",
+							telefone: "",
+							endereco: "",
+							num_endereco: "",
+							bairro: "",
+							cidade: "",
+							uf: "",
+							cep: "",
+							contratacoes: "",
+							pontuacao: ""
 						};
 			var radio1 = document.getElementsByName("tipo");
 			var radio2 = document.getElementsByName("sexo");
