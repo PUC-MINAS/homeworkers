@@ -51,46 +51,9 @@ Tela para cadastro
 			homeWorker - 2017 | TIS-I Trabalho Interdisciplinar de Software
 		</p>
 	</footer>
-	<script type="text/javascript">
-		var userObj = {
-							nome: "",
-							sobrenome: "",
-							tipo: "",
-							email: "",
-							senha: "",
-							sexo: ""
-						};
+	<script src="js\scripts.js" type="text/javascript">
 		
-		function cadastrar(){
-			alert("entrou na função");
-			var radio1 = document.getElementsByName("tipo");
-			var radio2 = document.getElementsByName("sexo");
-			userObj.nome = document.getElementById("nome").value;
-			userObj.sobrenome = document.getElementById("sobrenome").value;
-			userObj.email = document.getElementById("email").value;
-			userObj.senha = document.getElementById("senha").value;
-			for ( var i = 0; i < radio1.length; i++) {
-				if (radio1[i].checked) {
-					userObj.tipo = radio1[i].value;
-				}
-			}
-			for ( var i = 0; i < radio2.length; i++) {
-				if (radio2[i].checked) {
-					userObj.sexo = radio2[i].value;
-				}
-			}
-			var userObjJSON = JSON.stringify(userObj);
-			localStorage.setItem(userObj.nome, userObjJSON);
-			alert(JSON.stringify(userObj));
-		}
-
-		function rest (){
-			var text = localStorage.getItem("testeJSON");
-			var obj = JSON.parse(text);
-			document.getElementById("demo").innerHTML = obj.sobrenome+' '+obj.nome;
-
-		}
-
+		
 	</script>
 </body>
 </html>
