@@ -26,18 +26,21 @@ Tela para cadastro
   			<h2>Cadastrar</h2>
 	  		<form method="post" action="">
 	  			<p>
-	  				<input class="input-cadastro" type="text" name="nome" placeholder="Nome"/><br/>
-	  				<input class="input-cadastro" type="text" name="sobrenome" placeholder="Sobrenome"/><br/>
+	  				<input class="input-cadastro" type="text" name="nome" placeholder="Nome" id="nome"/><br/>
+	  				<input class="input-cadastro" type="text" name="sobrenome" placeholder="Sobrenome" id="sobrenome"/><br/>
 	  				<label for="profissional">Profissional</label> <input type="radio" name="tipo" value="profissional" id="profissional">
 	  				<label for="cliente">Cliente</label> <input type="radio" name="tipo" value="cliente" id="cliente">
 	  			</p>
 	  			<p>
-	  				<input class="input-cadastro" type="email" name="email" placeholder="Digite seu email"/><br/>
-	  				<input class="input-cadastro" type="password" name="senha" placeholder="Digite sua senha"/><br/>
-	  				<input class="input-cadastro" type="password" name="confirmasenha" placeholder="Confirme sua senha"/><br/>
+	  				<input class="input-cadastro" type="email" name="email" placeholder="Digite seu email" id="email"/><br/>
+	  				<input class="input-cadastro" type="password" name="senha" placeholder="Digite sua senha" id="senha"/><br/>
+	  				<input class="input-cadastro" type="password" name="confirmasenha" placeholder="Confirme sua senha" id="confirm-senha"/><br/>
+	  				Sexo: <label for="masculino">Masculino</label><input type="radio" name="sexo" id="masculino" value="masculino">
+	  				<label for="feminino">Feminino</label><input type="radio" name="sexo" id="feminino" value="feminino">
 	  			</p>
 	  			<p>
-	  				<input type="submit" name="submit"/>
+	  				<!--<input type="submit" name="submit"/>-->
+	  				<button type="button" onclick="cadastrar();">Enviar</button>
 	  			</p>
 	  		</form>
   		</div>
@@ -48,5 +51,9 @@ Tela para cadastro
 			homeWorker - 2017 | TIS-I Trabalho Interdisciplinar de Software
 		</p>
 	</footer>
+	<script src="js\scripts.js" type="text/javascript">
+		
+		
+	</script>
 </body>
 </html>
