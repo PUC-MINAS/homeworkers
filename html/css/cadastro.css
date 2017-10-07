@@ -18,8 +18,9 @@
 }
 
 .div-login, .div-cadastro {
-	height: 300px;
+	/*height: 300px;*/
 	min-width: : 250px;
+	padding: 10px;
 	background-color: white;
 	border: 1px solid black;
 	box-shadow: 1px;

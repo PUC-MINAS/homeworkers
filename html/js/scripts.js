@@ -1,11 +1,13 @@
 function gravarLocal (userObj) {
+	userObj.id = localStorage.length;
 	var userObjJSON = JSON.stringify(userObj);
-	localStorage.setItem(userObj.nome, userObjJSON);
+	localStorage.setItem( userObj.email , userObjJSON);
 	alert(JSON.stringify(userObj));
 }
 
 function pesquisarLocal(userObj) {
-	var text = localStorage.getItem(userObj.nome);
+
+	var text = localStorage.getItem(userObj.email);
 	obj = JSON.parse(text);
 	return obj;
 }
@@ -13,20 +15,23 @@ function pesquisarLocal(userObj) {
 
 function entrar () {
 			var logObj = {
-						nome: "",
+						email: "",
 						senha: ""
 					};
-			logObj.nome = document.getElementById("nome").value;
+			logObj.email = document.getElementById("email").value;
 			logObj.senha = document.getElementById("senha").value;
 
 			obj = pesquisarLocal(logObj);
 			
 			if (obj != null) {
-				if (obj.nome == logObj.nome && obj.senha == logObj.senha){
+				if (obj.email == logObj.email && obj.senha == logObj.senha){
 					alert("Seja bem vindo " + obj.nome);
-					document.getElementById("demo").innerHTML = obj.nome;
-					setCookie("nome", obj.nome, 1);
-					setCookie("senha", obj.senha, 1);
+					document.getElementById("demo").innerHTML = obj.email;
+					deleteCookie("hw-email");
+					deleteCookie("hw-senha");
+					setCookie("hw-email", obj.email, 1);
+					setCookie("hw-senha", obj.senha, 1);
+					/*setCookie( obj.email , obj.senha, 1);*/
 					window.location.assign("dadoscadastrais.html");
 					/*Criar cookie ou sessão*/
 				}
@@ -42,9 +47,11 @@ function entrar () {
 
 function cadastrar(){
 			var userObj = {
+							id: "",
 							nome: "",
 							sobrenome: "",
 							tipo: "",
+							profissao: "",
 							email: "",
 							senha: "",
 							sexo: "" ,
@@ -63,8 +70,22 @@ function cadastrar(){
 			var radio2 = document.getElementsByName("sexo");
 			userObj.nome = document.getElementById("nome").value;
 			userObj.sobrenome = document.getElementById("sobrenome").value;
+			userObj.profissao = document.getElementById("prof").value;
 			userObj.email = document.getElementById("email").value;
 			userObj.senha = document.getElementById("senha").value;
+			userObj.data_nascimento = document.getElementById("date").value;
+			userObj.telefone = document.getElementById("telefone").value;
+			userObj.endereco = document.getElementById("endereco").value;
+			userObj.num_endereco = document.getElementById("numero").value;
+			userObj.bairro = document.getElementById("bairro").value;
+			userObj.cidade = document.getElementById("cidade").value;
+			userObj.uf = document.getElementById("uf").value;
+			userObj.cep = document.getElementById("cep").value;
+
+			if (userObj.tipo == "cliente"){
+				userObj.profissao = "";
+			}
+
 			for ( var i = 0; i < radio1.length; i++) {
 				if (radio1[i].checked) {
 					userObj.tipo = radio1[i].value;
@@ -104,4 +125,12 @@ function setCookie(cname, cvalue, exdays) {
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
     var expires = "expires="+ d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function deleteCookie(cname) {
+	setCookie(cname,"",-1);
+}
+
+function checkUserOnline(argument) {
+	// body...
 }
