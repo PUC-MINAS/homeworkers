@@ -1,3 +1,5 @@
+var prof="";
+
 function gravarLocal (userObj) {
 	userObj.id = localStorage.length;
 	var userObjJSON = JSON.stringify(userObj);
@@ -6,10 +8,15 @@ function gravarLocal (userObj) {
 }
 
 function pesquisarLocal(userObj) {
-
 	var text = localStorage.getItem(userObj.email);
 	obj = JSON.parse(text);
 	return obj;
+}
+
+
+/************************************fazendo**/
+function pesquisarProfissionais (sprof) {
+	
 }
 
 
@@ -134,3 +141,10 @@ function deleteCookie(cname) {
 function checkUserOnline(argument) {
 	// body...
 }
+
+
+function lerParametro () {
+	var params = new URLSearchParams(document.location.search.substring(1));
+	prof = params.get("prof"); 
+}
+
