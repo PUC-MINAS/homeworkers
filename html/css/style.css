@@ -5,8 +5,8 @@
 	margin: 0;
 	padding: 0;
 }
-
 /**/
+
 body {
   background-color: #fffaf0;
   font-family: Arial;
@@ -21,6 +21,13 @@ header {
 	background-color: #d14836; 
 	width: 100%;
 	padding: 5px 0px 5px 10px;
+	font-family:Georgia;
+	font-style: italic;
+	
+}
+
+div.header{
+	
 }
 
 .logo{
@@ -53,10 +60,10 @@ div.icons img {
 
 /*index*/
 div.bprofissional{
-	color: #004466;
+	color: #000000;
 	background-color: #fdeddd;
-	width: 125px;
-	height: 125px;
+	width: 200px;
+	height: 100px;
 	display: inline-grid;
 	border: 2px solid #cc5200;
 	padding: 8px;
