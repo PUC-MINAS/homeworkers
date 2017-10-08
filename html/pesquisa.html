@@ -6,6 +6,7 @@ Página de pesquisa de profissionais. Nessa página será carregado a API do goo
 <head>
 	<meta charset='utf-8'/>
 	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+	<link rel="stylesheet" type="text/css" href="css/pesquisa.css"/>
 	<title>Pesquisa</title>
 </head>
 <body onload="lerParametro();">
@@ -20,11 +21,22 @@ Página de pesquisa de profissionais. Nessa página será carregado a API do goo
 			<a href="cadastro.html" class="a-noformat"><img src="" alt="Cadastrar" /></a>
 		</div>
 	</header>
-  <div id="corpo">
-
-  
-  </div>
-  <footer>
+	<div id="corpo">
+		<div id="lateral-esq">
+			<h2>Filtros</h2>
+			<form method=post action="">
+				<input type="text" name="prof" id="prof" placeholder="Pofissional" />
+				<input type="text" name="regiao" id="regiao" placeholder="Região"/>
+			</form>
+			
+		</div>
+		<div id="lateral-dir">
+			<p>
+				<span>Nenhum profissional encontrado!</span>
+			</p>
+		</div>  
+	</div>
+	<footer>
 		<p>
 			homeWorker - 2017 | TIS-I Trabalho Interdisciplinar de Software
 		</p>

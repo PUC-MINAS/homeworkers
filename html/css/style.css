@@ -16,6 +16,7 @@ body {
 /**/
 header {
 	position: fixed;
+	z-index: 1;
 	top: 0;
 	background-color: #d14836; 
 	width: 100%;
@@ -47,7 +48,7 @@ div.icons img {
 
 #corpo {
 	margin-top: 100px;	
-	margin-bottom: 200px;
+	margin-bottom: 50px;
 }
 
 /*index*/
