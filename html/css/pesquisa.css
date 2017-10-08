@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+#lateral-esq, #lateral-dir {
+	border: 1px solid black;
+	width: 400px;
+	position: relative;
+	top: -30px;
+	margin: 5px;
+	padding: 5px;
+}
+
+#lateral-esq {
+	width: calc(25%);
+}
+
+#lateral-dir {
+	width: calc(100% - 20px);
+	height: 600px;
+}

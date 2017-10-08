@@ -13,10 +13,18 @@ function pesquisarLocal(userObj) {
 	return obj;
 }
 
-
-/************************************fazendo**/
 function pesquisarProfissionais (sprof) {
-	
+	for(var i =0, a = []; i < localStorage.length; i++){
+  		a[i] = JSON.parse(localStorage.getItem(localStorage.key(i)));
+
+  		if (a[i].tipo == "profissional" && a[i].profissao == sprof) {
+  			imprimePesquisaProfissionais(a[i]);
+  		}
+	}
+}
+
+function imprimePesquisaProfissionais(userObj) {
+	/*Fazer*/
 }
 
 
@@ -110,7 +118,8 @@ function cadastrar(){
 
 }
 
-
+/**************************************************************************/
+/*Funcoes para Cookies*/
 function getCookie(cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -139,12 +148,13 @@ function deleteCookie(cname) {
 }
 
 function checkUserOnline(argument) {
-	// body...
+	/*Fazer*/
 }
-
+/*******************************************************************************/
 
 function lerParametro () {
 	var params = new URLSearchParams(document.location.search.substring(1));
 	prof = params.get("prof"); 
+	document.getElementById("prof").value = prof;
+	pesquisarProfissionais(prof);
 }
-
