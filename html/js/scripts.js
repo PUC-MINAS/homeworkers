@@ -50,10 +50,16 @@ function entrar () {
 					/*Criar cookie ou sessão*/
 				}
 				else {
+					
+					deleteCookie("email");
+					deleteCookie("senha");
 					alert("Usuário ou senha incorreta");
 				}
 			}
 			else{
+				
+				deleteCookie("email");
+				deleteCookie("senha");
 				alert("Usuário ou senha incorreta");
 			}			
 		}
