@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+
+#corpo{
+	width: 50%;
+	min-width: 250px;
+	margin: 0 auto;
+	margin-top: 100px;
+	margin-bottom: 100px;
+	text-align: center;
+}
+
+.foto-perfil {
+	width: 250px;
+	height: 250px;
+	border: 1px solid black;
+	display: inline-block;
+}
+
+.stars {
+	width: 100px;
+	border: 1px solid black;
+}
+
+.p-dados p {
+	margin: 10px;
+	font-weight: bold;
+}
+
+.p-dados span {
+	font-weight: normal;
+}
