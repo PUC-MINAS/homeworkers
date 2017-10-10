@@ -24,7 +24,12 @@ function pesquisarProfissionais (sprof) {
 }
 
 function imprimePesquisaProfissionais(userObj) {
-	/*Fazer*/
+	var txt = "<img src='' alt=''><br>Nome: <span id='nome' >"+
+				userObj.nome+"</span> <span id='sobrenome'>"+
+				userObj.sobrenome+"</span><br>Profissão: <span id='prof'>"+
+				userObj.profissao+"</span><br>Pontuação: <span id='pontuacao'>"+
+				userObj.pontuacao+"</span>";
+	document.getElementById("p-pesq").innerHTML = txt;
 }
 
 
