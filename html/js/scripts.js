@@ -1,10 +1,10 @@
-var prof="";
+﻿var prof="";
 
 function gravarLocal (userObj) {
 	userObj.id = localStorage.length;
 	var userObjJSON = JSON.stringify(userObj);
 	localStorage.setItem( userObj.email , userObjJSON);
-	alert(JSON.stringify(userObj));
+	/*alert(JSON.stringify(userObj));*/
 }
 
 function pesquisarLocal(userObj) {
@@ -41,20 +41,25 @@ function entrar () {
 			if (obj != null) {
 				if (obj.email == logObj.email && obj.senha == logObj.senha){
 					alert("Seja bem vindo " + obj.nome);
-					document.getElementById("demo").innerHTML = obj.email;
-					deleteCookie("hw-email");
-					deleteCookie("hw-senha");
-					setCookie("hw-email", obj.email, 1);
-					setCookie("hw-senha", obj.senha, 1);
+					deleteCookie("email");
+					deleteCookie("senha");
+					setCookie("email", obj.email, 1);
+					setCookie("senha", obj.senha, 1);
 					/*setCookie( obj.email , obj.senha, 1);*/
-					window.location.assign("dadoscadastrais.html");
+					window.location.assign("perfil.html");
 					/*Criar cookie ou sessão*/
 				}
 				else {
+					
+					deleteCookie("email");
+					deleteCookie("senha");
 					alert("Usuário ou senha incorreta");
 				}
 			}
 			else{
+				
+				deleteCookie("email");
+				deleteCookie("senha");
 				alert("Usuário ou senha incorreta");
 			}			
 		}
@@ -114,7 +119,7 @@ function cadastrar(){
 
 			gravarLocal(userObj);
 
-			window.location.assign("dadoscadastrais.html");
+			window.location.assign("perfil.html");
 
 }
 
@@ -148,7 +153,37 @@ function deleteCookie(cname) {
 }
 
 function checkUserOnline(argument) {
-	/*Fazer*/
+	var logObj = {
+					email: "",
+					senha: ""
+				};
+	logObj.email = getCookie("email");
+	logObj.senha = getCookie("senha");
+
+	var obj = pesquisarBD(logObj);
+
+	if (obj != null) {
+		if (obj.email == logObj.email && obj.senha == logObj.senha){
+			alert("Usuário " + obj.nome + "ja estava logado");
+
+			/*ligar funçoes de usuario logado*/
+		}
+		else {
+			deleteCookie("email");
+			deleteCookie("senha");
+			var str = location.href;
+			if (str.indexOf("perfil") != -1 ) {
+				window.location.assign("login.html");
+			}
+		}
+	}
+	else{
+		deleteCookie("email");
+		deleteCookie("senha");
+		if (str.indexOf("perfil") != -1 ) {
+			window.location.assign("login.html");
+		}
+	}
 }
 /*******************************************************************************/
 
