@@ -17,3 +17,10 @@
 	width: calc(100% - 20px);
 	height: 600px;
 }
+
+.div-lista {
+	border: 1px solid black;
+	padding: 5px;
+	margin: 5px;
+	background-color: white;
+}
