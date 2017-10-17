@@ -8,7 +8,7 @@
 /**/
 
 body {
-  background-color: #fffaf0;
+  background-color: #eef9f7;
   font-family: Arial;
   width: 100%;
 }
@@ -18,7 +18,7 @@ header {
 	position: fixed;
 	z-index: 1;
 	top: 0;
-	background-color: #d14836; 
+	background-color: #009681; 
 	width: 100%;
 	padding: 5px 0px 5px 10px;
 	font-family:Georgia;
@@ -61,11 +61,11 @@ div.icons img {
 /*index*/
 div.bprofissional{
 	color: #000000;
-	background-color: #fdeddd;
+	background-color: #ffffff;
 	width: 200px;
 	height: 100px;
 	display: inline-grid;
-	border: 2px solid #cc5200;
+	border: 2px solid #037b6a;
 	padding: 8px;
 	margin:16px;
 	text-align: center;
