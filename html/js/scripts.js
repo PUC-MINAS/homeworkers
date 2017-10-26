@@ -14,21 +14,38 @@ function pesquisarLocal(userObj) {
 }
 
 function pesquisarProfissionais (sprof) {
+	var b = [];
 	for(var i =0, a = []; i < localStorage.length; i++){
-  		a[i] = JSON.parse(localStorage.getItem(localStorage.key(i)));
-
-  		if (a[i].tipo == "profissional" && a[i].profissao == sprof) {
-  			imprimePesquisaProfissionais(a[i]);
+  		a[i] = JSON.parse(localStorage.getItem(localStorage.key(i)));	
+	}
+	for (i = 0; i < a.length; i++) {
+		if (a[i].tipo == "profissional" && a[i].profissao == sprof) {
+  			b.push(a[i]);
   		}
 	}
+	if (b.length > 0) {
+		document.getElementById("error-pesquisa").style.display = 'none';
+	}
+	imprimePesquisaProfissionais(b);
 }
 
 function imprimePesquisaProfissionais(userObj) {
-	var txt = "<img src='' alt=''><br>Nome: <span id='nome' >"+
-				userObj.nome+"</span> <span id='sobrenome'>"+
-				userObj.sobrenome+"</span><br>Profissão: <span id='prof'>"+
-				userObj.profissao+"</span><br>Pontuação: <span id='pontuacao'>"+
-				userObj.pontuacao+"</span>";
+	var txt = "";
+	for (var i=0; i<userObj.length; i++) {
+		txt += "<div class='div-lista'><img src='' alt=''><br>Nome: <span id='nome' >"+
+				userObj[i].nome+"</span> <span id='sobrenome'>"+
+				userObj[i].sobrenome+"</span><br>Profissão: <span id='prof'>"+
+				userObj[i].profissao+"</span><br>Pontuação: <span id='pontuacao'>"+
+				userObj[i].pontuacao+"</span><br>Endereço: <span id='endereco'>"+
+				userObj[i].endereco+"</span>, <span id='num_endereco'>"+
+				userObj[i].num_endereco+"</span>, <span id='bairro'>"+
+				userObj[i].bairro+"</span>, <span id='cidade'>"+
+				userObj[i].cidade+"</span> - <span id='uf'>"+
+				userObj[i].uf+"</span><br>Telefone: <span id='telefone'>"+
+				userObj[i].telefone+"</span><br>E-mail: <span id='email'>"+
+				userObj[i].email+"</span></div>";
+	}
+	
 	document.getElementById("p-pesq").innerHTML = txt;
 }
 
@@ -51,7 +68,7 @@ function entrar () {
 					setCookie("email", obj.email, 1);
 					setCookie("senha", obj.senha, 1);
 					/*setCookie( obj.email , obj.senha, 1);*/
-					window.location.assign("perfil.html");
+					window.location.assign("index.html");
 					/*Criar cookie ou sessão*/
 				}
 				else {
@@ -124,7 +141,7 @@ function cadastrar(){
 
 			gravarLocal(userObj);
 
-			window.location.assign("perfil.html");
+			window.location.assign("index.html");
 
 }
 
@@ -197,4 +214,9 @@ function lerParametro () {
 	prof = params.get("prof"); 
 	document.getElementById("prof").value = prof;
 	pesquisarProfissionais(prof);
+}
+
+function lerFiltro () {
+	var c = document.getElementById("prof").value;
+	pesquisarProfissionais(c.toLowerCase());
 }
