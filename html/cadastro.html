@@ -22,14 +22,23 @@ Tela para cadastro
 		</div>
 	</header>
   	<div id="corpo">
-  		<div class="div-cadastro">
-  			<h2>Cadastrar</h2>
-	  		<form method="post" action="">
+		<div id="div-botoes">
+			<button onclick="ativaFormClient();">Cliente</button>
+  			<button onclick="ativaFormProf();">Profissional</button>
+		</div>
+		
+
+  		<div class="div-cadastro" style="display:none" id="forms">
+
+  			
+	  		<form method="post" action="" onsubmit="cadastrar();" id="form-prof" style="display:none">
+	  			<h2>Cadastro Profissional</h2>
 	  			<p>
 	  				<input class="input-cadastro" type="text" name="nome" placeholder="Nome" id="nome"/><br/>
 	  				<input class="input-cadastro" type="text" name="sobrenome" placeholder="Sobrenome" id="sobrenome"/><br/>
-	  				<label for="profissional">Profissional</label> <input type="radio" name="tipo" value="profissional" id="profissional">
-	  				<label for="cliente">Cliente</label> <input type="radio" name="tipo" value="cliente" id="cliente"> </br>
+	  				Sexo: <label for="masculino">Masculino</label><input type="radio" name="sexo" id="masculino" value="masculino">
+	  				<label for="feminino">Feminino</label><input type="radio" name="sexo" id="feminino" value="feminino"><br/>
+	  				<label for="date">Nascimento: </label><input class="input-cadastro" type="date" name="data" placeholder="Data de Nascimento" id="date"><br/>
 	  				<label for="prof">Profissão exercida: </label>
 	  				<select name="prof" id="prof">
 	  					<option value="pedreiro">Pedreiro</option>
@@ -41,24 +50,40 @@ Tela para cadastro
 	  				</select>
 	  			</p>
 	  			<p>
-	  				<input class="input-cadastro" type="email" name="email" placeholder="Digite seu email" id="email"/><br/>
-	  				<input class="input-cadastro" type="password" name="senha" placeholder="Digite sua senha" id="senha"/><br/>
-	  				<input class="input-cadastro" type="password" name="confirmasenha" placeholder="Confirme sua senha" id="confirm-senha"/><br/>
-	  				Sexo: <label for="masculino">Masculino</label><input type="radio" name="sexo" id="masculino" value="masculino">
-	  				<label for="feminino">Feminino</label><input type="radio" name="sexo" id="feminino" value="feminino"><br/>
-	  				<label for="date">Nascimento: </label><input class="input-cadastro" type="date" name="data" placeholder="Data de Nascimento" id="date"><br/>
+	  				
 	  				<input class="input-cadastro" type="text" name="telefone" placeholder="Telefone" id="telefone"><br/>
 	  				<input class="input-cadastro" type="text" name="endereco" placeholder="Endereço" id="endereco"><br/>
 	  				<input class="input-cadastro" type="text" name="numero" placeholder="Número" id="numero"><br/>
 	  				<input class="input-cadastro" type="text" name="bairro" placeholder="Bairro" id="bairro"><br/>
 	  				<input class="input-cadastro" type="text" name="cidade" placeholder="Cidade" id="cidade"><br/>
 	  				<input class="input-cadastro" type="text" name="uf" placeholder="Estado" id="uf"><br/>
-	  				<input class="input-cadastro" type="text" name="cep" placeholder="CEP" id="cep">
+	  				<input class="input-cadastro" type="text" name="cep" placeholder="CEP" id="cep"><br>
+	  				<input class="input-cadastro" type="email" name="email" placeholder="Digite seu email" id="email"/><br/>
+	  				<input class="input-cadastro" type="password" name="senha" placeholder="Digite sua senha" id="senha"/><br/>
+	  				<input class="input-cadastro" type="password" name="confirmasenha" placeholder="Confirme sua senha" id="confirm-senha"/><br/>
 	  			</p>
 	  			<p>
 	  				<!--<input type="submit" name="submit"/>-->
-	  				<button type="button" onclick="cadastrar();">Enviar</button>
+	  				<input type="submit" name="enviar" value="Enviar" />
 	  			</p>
+	  		</form>
+	  		<form method="post" action="" onsubmit="return validaCadastroClient();" id="form-client" style="display:none">
+	  			<h2>Cadastro Cliente</h2>
+	  			<input class="input-cadastro" type="text" name="cnome" placeholder="Nome" id="cnome"/><br/>
+	  			<span id="cerror-nome"></span><br>
+	  			<input class="input-cadastro" type="text" name="csobrenome" placeholder="Sobrenome" id="csobrenome"/><br>
+	  			<span id="cerror-sobrenome"></span><br>
+	  			Sexo: <label for="cmasculino">Masculino</label><input type="radio" name="csexo" id="cmasculino" value="masculino" checked="checked">
+	  				<label for="cfeminino">Feminino</label><input type="radio" name="csexo" id="cfeminino" value="feminino"><br/>
+	  				<label for="cdate">Nascimento: </label><input class="input-cadastro" type="date" name="cdata" placeholder="Data de Nascimento" id="cdate"><br/>
+	  				<span id="cerror-data"></span>
+	  			<input class="input-cadastro" type="email" name="cemail" placeholder="Digite seu email" id="cemail"/><br>
+	  			<span id="cerror-email"></span><br>
+	  			<input class="input-cadastro" type="password" name="csenha" placeholder="Digite sua senha" id="csenha"><br>
+				<span id="cerror-senha"></span><br>
+	  			<input class="input-cadastro" type="password" name="cconfirmasenha" placeholder="Confirme sua senha" id="cconfirm-senha"><br>
+	  			<span id="cerror-confirmasenha"></span><br>
+	  			<input type="submit" value="Cadastrar" name="cadastrar">
 	  		</form>
   		</div>
   

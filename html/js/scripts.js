@@ -1,4 +1,4 @@
-﻿var prof="";
+var prof="";
 
 function gravarLocal (userObj) {
 	userObj.id = localStorage.length;
@@ -86,6 +86,53 @@ function entrar () {
 			}			
 		}
 
+function ativaFormClient() {
+	document.getElementById("forms").style.display = "block";
+	document.getElementById("form-client").style.display = "block";
+	document.getElementById("form-prof").style.display = "none";
+	//document.getElementById("div-botoes").style.display = "none";
+}
+
+function ativaFormProf() {
+	document.getElementById("forms").style.display = "block";
+	document.getElementById("form-prof").style.display = "block";
+	document.getElementById("form-client").style.display = "none";
+	//document.getElementById("div-botoes").style.display = "none";
+}
+
+function validaCadastroClient() {
+	var userObj = {
+					id: "",
+					nome: document.getElementById("cnome").value,
+					sobrenome: document.getElementById("csobrenome").value,
+					email: document.getElementById("cemail").value,
+					senha: document.getElementById("csenha").value,
+					sexo: "" ,
+					data_nascimento: document.getElementById("cdate").value
+					};
+
+	var radio = document.getElementsByName("csexo");
+	var confirma_senha = document.getElementById("cconfirm-senha").value;
+
+	for ( var i = 0; i < radio.length; i++) {
+		if (radio[i].checked) {
+			userObj.sexo = radio[i].value;
+		}
+	}
+
+	if(userObj.nome == ""){
+		document.getElementById("cerror-nome").innerHTML = "Campo Obrigatório";
+		return false;
+	}
+	if(userObj.sobrenome == ""){
+		document.getElementById("cerror-sobrenome").innerHTML = "Campo Obrigatório";
+		return false;
+	}
+	if(userObj.senha != confirma_senha){
+		document.getElementById("cerror-confirmasenha").innerHTML = "Senhas não conferem";
+		return false;
+	}
+}
 
 function cadastrar(){
 			var userObj = {
