@@ -1,5 +1,6 @@
 var prof="";
 
+/*Grava dados em local storage*/
 function gravarLocal (userObj) {
 	userObj.id = localStorage.length;
 	var userObjJSON = JSON.stringify(userObj);
@@ -103,16 +104,81 @@ function ativaFormProf() {
 function validaCadastroClient() {
 	var userObj = {
 					id: "",
-					nome: document.getElementById("cnome").value,
-					sobrenome: document.getElementById("csobrenome").value,
+					nome: document.getElementById("cnome").value.replace(/\s/g, ""),
+					sobrenome: document.getElementById("csobrenome").value.replace(/\s/g, ""),
 					email: document.getElementById("cemail").value,
 					senha: document.getElementById("csenha").value,
 					sexo: "" ,
-					data_nascimento: document.getElementById("cdate").value
+					data_nascimento: document.getElementById("cdate").value,
+					tipo: "cliente"
 					};
 
 	var radio = document.getElementsByName("csexo");
 	var confirma_senha = document.getElementById("cconfirm-senha").value;
+	var resp= true;
+	
+	for ( var i = 0; i < radio.length; i++) {
+		if (radio[i].checked) {
+			userObj.sexo = radio[i].value;
+		}
+	}
+
+	if(userObj.nome == ""){
+		document.getElementById("cerror-nome").innerHTML = "<br>Campo Obrigatório!";
+		resp= false;
+	}
+
+	if(userObj.sobrenome == ""){
+		document.getElementById("cerror-sobrenome").innerHTML = "<br>Campo Obrigatório!";
+		resp= false;
+	}
+
+	if(userObj.data_nascimento == ""){
+		document.getElementById("cerror-data").innerHTML = "<br>Campo Obrigatório!";
+		resp= false;
+	}
+
+	if(userObj.senha != confirma_senha){
+		document.getElementById("cerror-confirmasenha").innerHTML = "<br>Senhas não conferem!";
+		resp= false;
+	}
+	else if (userObj.senha.length < 8) {
+		document.getElementById("cerror-senha").innerHTML = "<br>A senha deve ter no mínimo 8 caracteres!";
+		resp= false;
+	}
+
+	if (resp) {
+		alert("Tudo OK - vai chamar a funcao gravaLocal");
+		gravarLocal(userObj);
+	}
+
+	return resp;
+}
+
+function validaCadastroProf() {
+	var userObj = {
+					id: "",
+					nome: document.getElementById("pnome").value.replace(/\s/g, ""),
+					sobrenome: document.getElementById("psobrenome").value.replace(/\s/g, ""),
+					email: document.getElementById("pemail").value,
+					senha: document.getElementById("psenha").value,
+					sexo: "" ,
+					data_nascimento: document.getElementById("pdate").value,
+					profissao: document.getElementById("prof").value,
+					telefone: document.getElementById("ptelefone").value.replace(/\s/g, ""),
+					endereco: document.getElementById("pendereco").value,
+					num_endereco: document.getElementById("pnumero").value.replace(/\s/g, ""),
+					bairro: document.getElementById("pbairro").value,
+					cidade: document.getElementById("pcidade").value,
+					uf: document.getElementById("puf").value,
+					cep: document.getElementById("pcep").value,
+					pontuacao: "",
+					tipo: "profissional"
+					};
+
+	var radio = document.getElementsByName("psexo");
+	var confirma_senha = document.getElementById("pconfirm-senha").value;
+	var resp= true;
 
 	for ( var i = 0; i < radio.length; i++) {
 		if (radio[i].checked) {
@@ -121,76 +187,76 @@ function validaCadastroClient() {
 	}
 
 	if(userObj.nome == ""){
-		document.getElementById("cerror-nome").innerHTML = "Campo Obrigatório";
-		return false;
+		document.getElementById("perror-nome").innerHTML = "<br>Campo Obrigatório!";
+		resp= false;
 	}
+
 	if(userObj.sobrenome == ""){
-		document.getElementById("cerror-sobrenome").innerHTML = "Campo Obrigatório";
-		return false;
+		document.getElementById("perror-sobrenome").innerHTML = "<br>Campo Obrigatório!";
+		resp= false;
 	}
+
+	if(userObj.data_nascimento == ""){
+		document.getElementById("perror-data").innerHTML = "<br>Campo Obrigatório!";
+		resp= false;
+	}
+
+	if (userObj.telefone == "") {
+		document.getElementById('perror-telefone').innerHTML = "<br>Campo Obrigatório!";
+		resp = false;
+	}
+
+	if (userObj.endereco == "") {
+		document.getElementById('perror-endereco').innerHTML = "<br>Campo Obrigatório!";
+		resp = false;
+	}
+
+	if (userObj.num_endereco == "") {
+		document.getElementById('perror-numero').innerHTML = "<br>Campo Obrigatório!";
+		resp = false;
+	}
+
+	if (userObj.bairro == "") {
+		document.getElementById('perror-bairro').innerHTML = "<br>Campo Obrigatório!";
+		resp = false;
+	}
+
+	if (userObj.cidade == "") {
+		document.getElementById('perror-cidade').innerHTML = "<br>Campo Obrigatório!";
+		resp = false;
+	}
+
+	if (userObj.estado == "") {
+		document.getElementById('perror-estado').innerHTML = "<br>Campo Obrigatório!";
+		resp = false;
+	}
+
+	if (userObj.cep == "") {
+		document.getElementById('perror-cep').innerHTML = "<br>Campo Obrigatório!";
+		resp = false;
+	}
+
 	if(userObj.senha != confirma_senha){
-		document.getElementById("cerror-confirmasenha").innerHTML = "Senhas não conferem";
-		return false;
+		document.getElementById("perror-confirmasenha").innerHTML = "<br>Senhas não conferem!";
+		resp= false;
 	}
-}
+	else if (userObj.senha.length < 8) {
+		document.getElementById("perror-senha").innerHTML = "<br>A senha deve ter no mínimo 8 caracteres!";
+		resp=false;
+	}
 
-function cadastrar(){
-			var userObj = {
-							id: "",
-							nome: "",
-							sobrenome: "",
-							tipo: "",
-							profissao: "",
-							email: "",
-							senha: "",
-							sexo: "" ,
-							data_nascimento: "",
-							telefone: "",
-							endereco: "",
-							num_endereco: "",
-							bairro: "",
-							cidade: "",
-							uf: "",
-							cep: "",
-							contratacoes: "",
-							pontuacao: ""
-						};
-			var radio1 = document.getElementsByName("tipo");
-			var radio2 = document.getElementsByName("sexo");
-			userObj.nome = document.getElementById("nome").value;
-			userObj.sobrenome = document.getElementById("sobrenome").value;
-			userObj.profissao = document.getElementById("prof").value;
-			userObj.email = document.getElementById("email").value;
-			userObj.senha = document.getElementById("senha").value;
-			userObj.data_nascimento = document.getElementById("date").value;
-			userObj.telefone = document.getElementById("telefone").value;
-			userObj.endereco = document.getElementById("endereco").value;
-			userObj.num_endereco = document.getElementById("numero").value;
-			userObj.bairro = document.getElementById("bairro").value;
-			userObj.cidade = document.getElementById("cidade").value;
-			userObj.uf = document.getElementById("uf").value;
-			userObj.cep = document.getElementById("cep").value;
 
-			if (userObj.tipo == "cliente"){
-				userObj.profissao = "";
-			}
+	if (resp) {
+		alert("Tudo OK - vai chamar a funcao gravaLocal");
+		gravarLocal(userObj);
+	}
 
-			for ( var i = 0; i < radio1.length; i++) {
-				if (radio1[i].checked) {
-					userObj.tipo = radio1[i].value;
-				}
-			}
-			for ( var i = 0; i < radio2.length; i++) {
-				if (radio2[i].checked) {
-					userObj.sexo = radio2[i].value;
-				}
-			}
+	return resp;
+}	
 
-			gravarLocal(userObj);
 
-			window.location.assign("index.html");
 
-}
+
 
 /**************************************************************************/
 /*Funcoes para Cookies*/
@@ -266,4 +332,153 @@ function lerParametro () {
 function lerFiltro () {
 	var c = document.getElementById("prof").value;
 	pesquisarProfissionais(c.toLowerCase());
+}
+
+
+/*testando validação de cep pela api do correio*/
+/*$(document).ready(function() {
+
+            function limpa_formulário_cep() {
+                // Limpa valores do formulário de cep.
+                $("#pendereco").val("");
+                $("#pbairro").val("");
+                $("#pcidade").val("");
+                $("#puf").val("");                
+            }
+            
+            //Quando o campo cep perde o foco.
+            $("#pcep").blur(function() {
+
+                //Nova variável "cep" somente com dígitos.
+                var cep = $(this).val().replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if(validacep.test(cep)) {
+
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        $("#pendereco").val("...");
+                        $("#pbairro").val("...");
+                        $("#pcidade").val("...");
+                        $("#puf").val("...");
+
+                        //Consulta o webservice viacep.com.br/
+                        $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                            if (!("erro" in dados)) {
+                                //Atualiza os campos com os valores da consulta.
+                                $("#pendereco").val(dados.logradouro);
+                                $("#pbairro").val(dados.bairro);
+                                $("#pcidade").val(dados.localidade);
+                                $("#puf").val(dados.uf);
+                            } //end if.
+                            else {
+                                //CEP pesquisado não foi encontrado.
+                                limpa_formulário_cep();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            });
+        });
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/********************************************************************************/
+/*funcoes inativas*/
+function cadastrar(){
+			var userObj = {
+							id: "",
+							nome: "",
+							sobrenome: "",
+							tipo: "",
+							profissao: "",
+							email: "",
+							senha: "",
+							sexo: "" ,
+							data_nascimento: "",
+							telefone: "",
+							endereco: "",
+							num_endereco: "",
+							bairro: "",
+							cidade: "",
+							uf: "",
+							cep: "",
+							contratacoes: "",
+							pontuacao: ""
+						};
+			var radio1 = document.getElementsByName("tipo");
+			var radio2 = document.getElementsByName("sexo");
+			userObj.nome = document.getElementById("nome").value;
+			userObj.sobrenome = document.getElementById("sobrenome").value;
+			userObj.profissao = document.getElementById("prof").value;
+			userObj.email = document.getElementById("email").value;
+			userObj.senha = document.getElementById("senha").value;
+			userObj.data_nascimento = document.getElementById("date").value;
+			userObj.telefone = document.getElementById("telefone").value;
+			userObj.endereco = document.getElementById("endereco").value;
+			userObj.num_endereco = document.getElementById("numero").value;
+			userObj.bairro = document.getElementById("bairro").value;
+			userObj.cidade = document.getElementById("cidade").value;
+			userObj.uf = document.getElementById("uf").value;
+			userObj.cep = document.getElementById("cep").value;
+
+			if (userObj.tipo == "cliente"){
+				userObj.profissao = "";
+			}
+
+			for ( var i = 0; i < radio1.length; i++) {
+				if (radio1[i].checked) {
+					userObj.tipo = radio1[i].value;
+				}
+			}
+			for ( var i = 0; i < radio2.length; i++) {
+				if (radio2[i].checked) {
+					userObj.sexo = radio2[i].value;
+				}
+			}
+
+			gravarLocal(userObj);
+
+			window.location.assign("index.html");
+
 }
