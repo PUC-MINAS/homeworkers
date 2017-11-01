@@ -1,19 +1,43 @@
 var prof="";
 
-/*Grava dados em local storage*/
-function gravarLocal (userObj) {
-	userObj.id = localStorage.length;
-	var userObjJSON = JSON.stringify(userObj);
-	localStorage.setItem( userObj.email , userObjJSON);
-	/*alert(JSON.stringify(userObj));*/
-}
-
+/*Pesquisa dados em localstorage --- incompleta*/
 function pesquisarLocal(userObj) {
 	var text = localStorage.getItem(userObj.email);
 	obj = JSON.parse(text);
 	return obj;
 }
 
+/*Grava dados em local storage*/
+function gravarLocal(userObj, tipo) {
+	if (localStorage.clientes == undefined){
+		localStorage.setItem("clientes", JSON.stringify([]));
+	}
+	if (localStorage.profissionais == undefined){
+		localStorage.setItem("profissionais", JSON.stringify([]));
+	}
+
+	if (tipo == 0) {
+		var table = JSON.parse(localStorage.clientes);
+		userObj.id = table.length;
+		table[table.length] = userObj;
+		localStorage.clientes = JSON.stringify(table);
+	}
+	else if (tipo == 1){
+		var table = JSON.parse(localStorage.profissionais);
+		userObj.id = table.length;
+		table[table.length] = userObj;
+		localStorage.profissionais = JSON.stringify(table);
+	}
+
+}
+
+
+function pesquisarLocal2(userObj){
+
+}
+
+
+/*Pesquisa por profissionais em local storage*/
 function pesquisarProfissionais (sprof) {
 	var b = [];
 	for(var i =0, a = []; i < localStorage.length; i++){
@@ -30,6 +54,7 @@ function pesquisarProfissionais (sprof) {
 	imprimePesquisaProfissionais(b);
 }
 
+/*Imprime na tela de pesquisa dados do profissional*/
 function imprimePesquisaProfissionais(userObj) {
 	var txt = "";
 	for (var i=0; i<userObj.length; i++) {
@@ -50,43 +75,45 @@ function imprimePesquisaProfissionais(userObj) {
 	document.getElementById("p-pesq").innerHTML = txt;
 }
 
-
+/*Funcao para logar no site --- Incompleta*/
 function entrar () {
-			var logObj = {
-						email: "",
-						senha: ""
-					};
-			logObj.email = document.getElementById("email").value;
-			logObj.senha = document.getElementById("senha").value;
+	var logObj = {
+					email: "",
+					senha: ""
+				};
+	logObj.email = document.getElementById("email").value;
+	logObj.senha = document.getElementById("senha").value;
 
-			obj = pesquisarLocal(logObj);
+	obj = pesquisarLocal(logObj);
 			
-			if (obj != null) {
-				if (obj.email == logObj.email && obj.senha == logObj.senha){
-					alert("Seja bem vindo " + obj.nome);
-					deleteCookie("email");
-					deleteCookie("senha");
-					setCookie("email", obj.email, 1);
-					setCookie("senha", obj.senha, 1);
-					/*setCookie( obj.email , obj.senha, 1);*/
-					window.location.assign("index.html");
-					/*Criar cookie ou sessão*/
-				}
-				else {
-					
-					deleteCookie("email");
-					deleteCookie("senha");
-					alert("Usuário ou senha incorreta");
-				}
-			}
-			else{
-				
-				deleteCookie("email");
-				deleteCookie("senha");
-				alert("Usuário ou senha incorreta");
-			}			
+	if (obj != null) {
+		if (obj.email == logObj.email && obj.senha == logObj.senha){
+			alert("Seja bem vindo " + obj.nome);
+			deleteCookie("email");
+			deleteCookie("senha");
+			setCookie("email", obj.email, 1);
+			setCookie("senha", obj.senha, 1);
+			/*setCookie( obj.email , obj.senha, 1);*/
+			window.location.assign("index.html");
+			/*Criar cookie ou sessão*/
 		}
+		else {
+					
+			deleteCookie("email");
+			deleteCookie("senha");
+			alert("Usuário ou senha incorreta");
+		}
+	}
+	else{
+			
+		deleteCookie("email");
+		deleteCookie("senha");
+		alert("Usuário ou senha incorreta");
+	}			
+}
 
+
+/*Mostra formulário do Cliente*/
 function ativaFormClient() {
 	document.getElementById("forms").style.display = "block";
 	document.getElementById("form-client").style.display = "block";
@@ -94,6 +121,7 @@ function ativaFormClient() {
 	//document.getElementById("div-botoes").style.display = "none";
 }
 
+/*Mostra formulário do profissional*/
 function ativaFormProf() {
 	document.getElementById("forms").style.display = "block";
 	document.getElementById("form-prof").style.display = "block";
@@ -101,6 +129,7 @@ function ativaFormProf() {
 	//document.getElementById("div-botoes").style.display = "none";
 }
 
+/*Valida dados do fomulário de Clientes e chama a funcao gravarLocal(); para gravar os dados do cadastro*/
 function validaCadastroClient() {
 	var userObj = {
 					id: "",
@@ -109,8 +138,7 @@ function validaCadastroClient() {
 					email: document.getElementById("cemail").value,
 					senha: document.getElementById("csenha").value,
 					sexo: "" ,
-					data_nascimento: document.getElementById("cdate").value,
-					tipo: "cliente"
+					data_nascimento: document.getElementById("cdate").value
 					};
 
 	var radio = document.getElementsByName("csexo");
@@ -149,12 +177,13 @@ function validaCadastroClient() {
 
 	if (resp) {
 		alert("Tudo OK - vai chamar a funcao gravaLocal");
-		gravarLocal(userObj);
+		gravarLocal(userObj, 0);
 	}
 
 	return resp;
 }
 
+/*Valida dados do fomulário de Profissionais e chama a funcao gravarLocal(); para gravar os dados do cadastro*/
 function validaCadastroProf() {
 	var userObj = {
 					id: "",
@@ -256,6 +285,7 @@ function validaCadastroProf() {
 
 var HTTPReq = new XMLHttpRequest();
 
+/*Funcao para pesquisar CEP e preencher campos de endereço dos formulários automáticamente*/
 function pesquisaCep (){
 	var cep = document.getElementById('pcep').value;
 	var url = 'https://viacep.com.br/ws/'+cep+'/json/';
@@ -265,7 +295,7 @@ function pesquisaCep (){
 	HTTPReq.send('');	
 }
 
-
+/*trata dados da funcao pesquisaCEP();*/
 function trataResposta (id) {
 	if (HTTPReq.readyState == 4) {
 		var result = JSON.parse (HTTPReq.responseText);
@@ -282,7 +312,7 @@ function trataResposta (id) {
 
 
 /**************************************************************************/
-/*Funcoes para Cookies*/
+/*Funcoes para Cookies --- Incompletas*/
 function getCookie(cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -345,6 +375,7 @@ function checkUserOnline(argument) {
 }
 /*******************************************************************************/
 
+/*Ler parametros da query da URL*/
 function lerParametro () {
 	var params = new URLSearchParams(document.location.search.substring(1));
 	prof = params.get("prof"); 
@@ -352,6 +383,7 @@ function lerParametro () {
 	pesquisarProfissionais(prof);
 }
 
+/*Ler campo de filtro da página de pesquisa e chama a funcao pesquisarProfissionais*/
 function lerFiltro () {
 	var c = document.getElementById("prof").value;
 	pesquisarProfissionais(c.toLowerCase());
@@ -447,7 +479,7 @@ function lerFiltro () {
 
 
 /********************************************************************************/
-/*funcoes inativas*/
+/*funcoes inativas --- Serão deletadas*/
 function cadastrar(){
 			var userObj = {
 							id: "",
@@ -504,4 +536,12 @@ function cadastrar(){
 
 			window.location.assign("index.html");
 
+}
+
+/*Grava dados em local storage*/
+function gravarLocal2 (userObj) {
+	userObj.id = localStorage.length;
+	var userObjJSON = JSON.stringify(userObj);
+	localStorage.setItem( userObj.email , userObjJSON);
+	/*alert(JSON.stringify(userObj));*/
 }
