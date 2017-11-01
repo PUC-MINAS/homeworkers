@@ -254,6 +254,29 @@ function validaCadastroProf() {
 	return resp;
 }	
 
+var HTTPReq = new XMLHttpRequest();
+
+function pesquisaCep (){
+	var cep = document.getElementById('pcep').value;
+	var url = 'https://viacep.com.br/ws/'+cep+'/json/';
+	
+	HTTPReq.onreadystatechange = trataResposta;
+	HTTPReq.open('GET', url + '?_view=json','true');
+	HTTPReq.send('');	
+}
+
+
+function trataResposta (id) {
+	if (HTTPReq.readyState == 4) {
+		var result = JSON.parse (HTTPReq.responseText);
+		/*alert(result.cep +'\n'+result.logradouro+'\n'+result.bairro+'\n'+result.localidade+'\n'+result.uf);*/
+		document.getElementById('pendereco').value = result.logradouro;
+		document.getElementById('pbairro').value = result.bairro;
+		document.getElementById('pcidade').value = result.localidade;
+		document.getElementById('puf').value = result.uf;
+	}
+}
+
 
 
 
