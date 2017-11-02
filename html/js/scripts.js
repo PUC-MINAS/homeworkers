@@ -1,4 +1,4 @@
-var prof="";
+/*var prof="";*/
 
 /*Pesquisa dados em localstorage --- incompleta*/
 function pesquisarLocal(userObj) {
@@ -36,23 +36,26 @@ function pesquisarLocal2(userObj){
 
 }
 
-
 /*Pesquisa por profissionais em local storage*/
-function pesquisarProfissionais (sprof) {
-	var b = [];
-	for(var i =0, a = []; i < localStorage.length; i++){
-  		a[i] = JSON.parse(localStorage.getItem(localStorage.key(i)));	
-	}
-	for (i = 0; i < a.length; i++) {
-		if (a[i].tipo == "profissional" && a[i].profissao == sprof) {
-  			b.push(a[i]);
+function pesquisarProfissionais(sprof){
+	var table = JSON.parse(localStorage.profissionais);
+	var b= [];
+	for (var i = 0; i < table.length; i++) {
+		if (table[i].profissao == sprof.profissao) {
+  			b.push(table[i]);
   		}
 	}
 	if (b.length > 0) {
 		document.getElementById("error-pesquisa").style.display = 'none';
 	}
+	else {
+		document.getElementById("error-pesquisa").style.display = 'block';
+	}
 	imprimePesquisaProfissionais(b);
 }
+
+
+
 
 /*Imprime na tela de pesquisa dados do profissional*/
 function imprimePesquisaProfissionais(userObj) {
@@ -277,7 +280,7 @@ function validaCadastroProf() {
 
 	if (resp) {
 		alert("Tudo OK - vai chamar a funcao gravaLocal");
-		gravarLocal(userObj);
+		gravarLocal(userObj, 1);
 	}
 
 	return resp;
@@ -378,15 +381,25 @@ function checkUserOnline(argument) {
 /*Ler parametros da query da URL*/
 function lerParametro () {
 	var params = new URLSearchParams(document.location.search.substring(1));
-	prof = params.get("prof"); 
-	document.getElementById("prof").value = prof;
-	pesquisarProfissionais(prof);
+	var prof = params.get("prof"); 
+	if (prof == null) {
+		document.getElementById("prof").value = "";
+	}
+	else {
+		document.getElementById("prof").value = prof;
+	}
+	
+	lerFiltro();
 }
 
 /*Ler campo de filtro da página de pesquisa e chama a funcao pesquisarProfissionais*/
 function lerFiltro () {
-	var c = document.getElementById("prof").value;
-	pesquisarProfissionais(c.toLowerCase());
+	var c = {};
+	c.profissao = document.getElementById("prof").value;
+	c.profissao = c.profissao.toLowerCase();
+	c.regiao = document.getElementById("regiao").value;
+
+	pesquisarProfissionais(c);
 }
 
 
