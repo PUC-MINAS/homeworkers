@@ -1,13 +1,28 @@
-/*var prof="";*/
+/*Variáveis Globais*/
+var HTTPReq = new XMLHttpRequest();
+
+
+/*---------------------------------------------*/
+
 
 /*Pesquisa dados em localstorage --- incompleta*/
+/*userObj é um objeto contando email e senha*/
 function pesquisarLocal(userObj) {
-	var text = localStorage.getItem(userObj.email);
-	obj = JSON.parse(text);
-	return obj;
+	var table = JSON.parse(localStorage.clientes);
+	table = table.concat(JSON.parse(localStorage.profissionais));
+
+	for (var i=0; i < table.length; i++) {
+		if (userObj.email == table[i].email) {
+			return table[i];
+		}
+	}
+
+	return false;	
 }
 
 /*Grava dados em local storage*/
+/*userObj é um objeto com estrutura completa*/
+/*tipo é um inteiro que define o tipo de cliente. Clientes = 0, profissionais = 1*/
 function gravarLocal(userObj, tipo) {
 	if (localStorage.clientes == undefined){
 		localStorage.setItem("clientes", JSON.stringify([]));
@@ -32,12 +47,58 @@ function gravarLocal(userObj, tipo) {
 }
 
 
-function pesquisarLocal2(userObj){
-
-}
-
 /*Pesquisa por profissionais em local storage*/
 function pesquisarProfissionais(sprof){
+	var table = JSON.parse(localStorage.profissionais);
+	var b= [];
+	var str;
+
+	for (var i = 0; i < table.length; i++) {
+		str = table[i].profissao + " " + table[i].endereco + " " + table[i].num_endereco + " " +
+		 table[i].bairro + " " + table[i].cidade + " " + table[i].uf;
+		 str = str.toLowerCase();
+		if ( str.search(sprof.profissao) != -1 && str.search(sprof.regiao) != -1 ) {
+ 			b.push(table[i]);
+  		}
+	}
+	if (b.length > 0) {
+		document.getElementById("error-pesquisa").style.display = 'none';
+	}
+	else {
+		document.getElementById("error-pesquisa").style.display = 'block';
+	}
+	imprimePesquisaProfissionais(b);
+}
+
+/*Ler parametros da query da URL*/
+function lerParametro () {
+	var params = new URLSearchParams(document.location.search.substring(1));
+	var prof = params.get("prof"); 
+	if (prof == null) {
+		document.getElementById("prof").value = "";
+	}
+	else {
+		document.getElementById("prof").value = prof;
+	}
+	
+	lerFiltro();
+}
+
+
+/*Ler campo de filtro da página de pesquisa e chama a funcao pesquisarProfissionais*/
+function lerFiltro () {
+	var c = {};
+	c.profissao = document.getElementById("prof").value;
+	c.profissao = c.profissao.toLowerCase();
+	c.regiao = document.getElementById("regiao").value;
+	c.regiao = c.regiao.toLowerCase();
+
+	pesquisarProfissionais(c);
+}
+
+
+/*Pesquisa por profissionais em local storage ---- inativa*/
+/*function pesquisarProfissionais(sprof){
 	var table = JSON.parse(localStorage.profissionais);
 	var b= [];
 	for (var i = 0; i < table.length; i++) {
@@ -52,7 +113,7 @@ function pesquisarProfissionais(sprof){
 		document.getElementById("error-pesquisa").style.display = 'block';
 	}
 	imprimePesquisaProfissionais(b);
-}
+}*/
 
 
 
@@ -61,7 +122,7 @@ function pesquisarProfissionais(sprof){
 function imprimePesquisaProfissionais(userObj) {
 	var txt = "";
 	for (var i=0; i<userObj.length; i++) {
-		txt += "<div class='div-lista'><img src='' alt=''><br>Nome: <span id='nome' >"+
+		txt += "<a href='perfil.html?perfil=" + userObj[i].id + "' class='a-noformat' ><div class='div-lista'><img src='' alt=''><br>Nome: <span id='nome' >"+
 				userObj[i].nome+"</span> <span id='sobrenome'>"+
 				userObj[i].sobrenome+"</span><br>Profissão: <span id='prof'>"+
 				userObj[i].profissao+"</span><br>Pontuação: <span id='pontuacao'>"+
@@ -72,13 +133,13 @@ function imprimePesquisaProfissionais(userObj) {
 				userObj[i].cidade+"</span> - <span id='uf'>"+
 				userObj[i].uf+"</span><br>Telefone: <span id='telefone'>"+
 				userObj[i].telefone+"</span><br>E-mail: <span id='email'>"+
-				userObj[i].email+"</span></div>";
+				userObj[i].email+"</span></div></a>";
 	}
 	
 	document.getElementById("p-pesq").innerHTML = txt;
 }
 
-/*Funcao para logar no site --- Incompleta*/
+/*Funcao para logar no site*/
 function entrar () {
 	var logObj = {
 					email: "",
@@ -87,32 +148,96 @@ function entrar () {
 	logObj.email = document.getElementById("email").value;
 	logObj.senha = document.getElementById("senha").value;
 
-	obj = pesquisarLocal(logObj);
+	var obj = pesquisarLocal(logObj);
 			
 	if (obj != null) {
 		if (obj.email == logObj.email && obj.senha == logObj.senha){
 			alert("Seja bem vindo " + obj.nome);
-			deleteCookie("email");
-			deleteCookie("senha");
-			setCookie("email", obj.email, 1);
-			setCookie("senha", obj.senha, 1);
-			/*setCookie( obj.email , obj.senha, 1);*/
-			window.location.assign("index.html");
-			/*Criar cookie ou sessão*/
+			deleteLogin();
+			setLogin(logObj);
+			window.location.assign("perfil.html");
 		}
 		else {
 					
-			deleteCookie("email");
-			deleteCookie("senha");
+			deleteLogin();
 			alert("Usuário ou senha incorreta");
 		}
 	}
 	else{
 			
-		deleteCookie("email");
-		deleteCookie("senha");
+		deleteLogin();
 		alert("Usuário ou senha incorreta");
 	}			
+}
+
+function sair () {
+	deleteLogin();
+	alert("Volte Sempre!");
+	window.location.assign("index.html");
+}
+
+function setLogin (login) {
+	localStorage.setItem("login", JSON.stringify(login));
+	window.location.assign("perfil.html");
+}
+
+function deleteLogin () {
+	localStorage.removeItem("login");
+}
+
+function checkLogin () {
+	var log = JSON.parse(localStorage.login);
+	var login = pesquisarLocal(log);
+	if (log.email == login.email && log.senha == login.senha) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+function lerParametroPerfil () {
+	console.log("Entou em lerParametroPerfil");
+	var params = new URLSearchParams(document.location.search.substring(1));
+	var perfil = params.get("perfil"); 
+	console.log("perfil=", perfil);
+	return perfil;
+}
+
+function perfil() {
+	console.log("entrou funcao perfil");
+	var perfil_id = lerParametroPerfil();
+	console.log("perfil_id = ", perfil_id);
+	var table = JSON.parse(localStorage.profissionais);
+	console.log(table);
+	var obj;
+	for (var i= 0; i < table.length; i++) {
+		if (perfil_id == table[i].id) {
+			obj = table[i];
+			console.log ("obj=", obj);
+		}
+	}
+	if (obj == undefined) {
+		window.location.assign("index.html");
+	}
+	else {
+		imprimePerfil(obj);
+	}
+
+}
+
+function imprimePerfil (userObj) {
+	console.log("Entrou na funcao pra imprimirir")
+	document.getElementById("name-user").innerHTML = userObj.nome + " " + userObj.sobrenome;
+	document.getElementById("avaliacao").inner = "N/A";
+	document.getElementById("contratacoes").innerHTML = "0";
+	document.getElementById("sexo").innerHTML = userObj.sexo;
+	document.getElementById("data_nascimento").innerHTML = userObj.data_nascimento;
+	document.getElementById("numero_telefone").innerHTML = userObj.num_telefone;
+	document.getElementById("email").innerHTML = userObj.email;
+	document.getElementById("endereco").innerHTML = userObj.endereco +" "+ userObj.num_endereco +" "+ userObj.bairro+" "+
+	userObj.cidade+" "+ userObj.cidade;
+	document.getElementById("cep").innerHTML = userObj.cep;
 }
 
 
@@ -286,8 +411,6 @@ function validaCadastroProf() {
 	return resp;
 }	
 
-var HTTPReq = new XMLHttpRequest();
-
 /*Funcao para pesquisar CEP e preencher campos de endereço dos formulários automáticamente*/
 function pesquisaCep (){
 	var cep = document.getElementById('pcep').value;
@@ -309,184 +432,6 @@ function trataResposta (id) {
 		document.getElementById('puf').value = result.uf;
 	}
 }
-
-
-
-
-
-/**************************************************************************/
-/*Funcoes para Cookies --- Incompletas*/
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
-
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
-
-function deleteCookie(cname) {
-	setCookie(cname,"",-1);
-}
-
-function checkUserOnline(argument) {
-	var logObj = {
-					email: "",
-					senha: ""
-				};
-	logObj.email = getCookie("email");
-	logObj.senha = getCookie("senha");
-
-	var obj = pesquisarBD(logObj);
-
-	if (obj != null) {
-		if (obj.email == logObj.email && obj.senha == logObj.senha){
-			alert("Usuário " + obj.nome + "ja estava logado");
-
-			/*ligar funçoes de usuario logado*/
-		}
-		else {
-			deleteCookie("email");
-			deleteCookie("senha");
-			var str = location.href;
-			if (str.indexOf("perfil") != -1 ) {
-				window.location.assign("login.html");
-			}
-		}
-	}
-	else{
-		deleteCookie("email");
-		deleteCookie("senha");
-		if (str.indexOf("perfil") != -1 ) {
-			window.location.assign("login.html");
-		}
-	}
-}
-/*******************************************************************************/
-
-/*Ler parametros da query da URL*/
-function lerParametro () {
-	var params = new URLSearchParams(document.location.search.substring(1));
-	var prof = params.get("prof"); 
-	if (prof == null) {
-		document.getElementById("prof").value = "";
-	}
-	else {
-		document.getElementById("prof").value = prof;
-	}
-	
-	lerFiltro();
-}
-
-/*Ler campo de filtro da página de pesquisa e chama a funcao pesquisarProfissionais*/
-function lerFiltro () {
-	var c = {};
-	c.profissao = document.getElementById("prof").value;
-	c.profissao = c.profissao.toLowerCase();
-	c.regiao = document.getElementById("regiao").value;
-
-	pesquisarProfissionais(c);
-}
-
-
-/*testando validação de cep pela api do correio*/
-/*$(document).ready(function() {
-
-            function limpa_formulário_cep() {
-                // Limpa valores do formulário de cep.
-                $("#pendereco").val("");
-                $("#pbairro").val("");
-                $("#pcidade").val("");
-                $("#puf").val("");                
-            }
-            
-            //Quando o campo cep perde o foco.
-            $("#pcep").blur(function() {
-
-                //Nova variável "cep" somente com dígitos.
-                var cep = $(this).val().replace(/\D/g, '');
-
-                //Verifica se campo cep possui valor informado.
-                if (cep != "") {
-
-                    //Expressão regular para validar o CEP.
-                    var validacep = /^[0-9]{8}$/;
-
-                    //Valida o formato do CEP.
-                    if(validacep.test(cep)) {
-
-                        //Preenche os campos com "..." enquanto consulta webservice.
-                        $("#pendereco").val("...");
-                        $("#pbairro").val("...");
-                        $("#pcidade").val("...");
-                        $("#puf").val("...");
-
-                        //Consulta o webservice viacep.com.br/
-                        $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
-
-                            if (!("erro" in dados)) {
-                                //Atualiza os campos com os valores da consulta.
-                                $("#pendereco").val(dados.logradouro);
-                                $("#pbairro").val(dados.bairro);
-                                $("#pcidade").val(dados.localidade);
-                                $("#puf").val(dados.uf);
-                            } //end if.
-                            else {
-                                //CEP pesquisado não foi encontrado.
-                                limpa_formulário_cep();
-                                alert("CEP não encontrado.");
-                            }
-                        });
-                    } //end if.
-                    else {
-                        //cep é inválido.
-                        limpa_formulário_cep();
-                        alert("Formato de CEP inválido.");
-                    }
-                } //end if.
-                else {
-                    //cep sem valor, limpa formulário.
-                    limpa_formulário_cep();
-                }
-            });
-        });
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -558,3 +503,68 @@ function gravarLocal2 (userObj) {
 	localStorage.setItem( userObj.email , userObjJSON);
 	/*alert(JSON.stringify(userObj));*/
 }
+
+/**************************************************************************/
+/*Funcoes para Cookies --- Incompletas*/
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function deleteCookie(cname) {
+	setCookie(cname,"",-1);
+}
+
+function checkUserOnline(argument) {
+	var logObj = {
+					email: "",
+					senha: ""
+				};
+	logObj.email = getCookie("email");
+	logObj.senha = getCookie("senha");
+
+	var obj = pesquisarBD(logObj);
+
+	if (obj != null) {
+		if (obj.email == logObj.email && obj.senha == logObj.senha){
+			alert("Usuário " + obj.nome + "ja estava logado");
+
+			/*ligar funçoes de usuario logado*/
+		}
+		else {
+			deleteCookie("email");
+			deleteCookie("senha");
+			var str = location.href;
+			if (str.indexOf("perfil") != -1 ) {
+				window.location.assign("login.html");
+			}
+		}
+	}
+	else{
+		deleteCookie("email");
+		deleteCookie("senha");
+		if (str.indexOf("perfil") != -1 ) {
+			window.location.assign("login.html");
+		}
+	}
+}
+/*******************************************************************************/
+
