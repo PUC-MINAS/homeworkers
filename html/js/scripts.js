@@ -55,8 +55,8 @@ function pesquisarProfissionais(sprof){
 
 	for (var i = 0; i < table.length; i++) {
 		str = table[i].profissao + " " + table[i].endereco + " " + table[i].num_endereco + " " +
-		 table[i].bairro + " " + table[i].cidade + " " + table[i].uf;
-		 str = str.toLowerCase();
+			  table[i].bairro + " " + table[i].cidade + " " + table[i].uf;
+		str = str.toLowerCase();
 		if ( str.search(sprof.profissao) != -1 && str.search(sprof.regiao) != -1 ) {
  			b.push(table[i]);
   		}
@@ -68,6 +68,11 @@ function pesquisarProfissionais(sprof){
 		document.getElementById("error-pesquisa").style.display = 'block';
 	}
 	imprimePesquisaProfissionais(b);
+	/*plotaMaps(b);*/
+}
+
+function plotaMaps(table) {
+
 }
 
 /*Ler parametros da query da URL*/
@@ -211,29 +216,60 @@ function perfil() {
 	var table = JSON.parse(localStorage.profissionais);
 	console.log(table);
 	var obj;
-	for (var i= 0; i < table.length; i++) {
-		if (perfil_id == table[i].id) {
-			obj = table[i];
-			console.log ("obj=", obj);
-		}
-	}
-	if (obj == undefined) {
-		window.location.assign("index.html");
+	if (perfil_id == null) {
+		MeuPerfil();
 	}
 	else {
-		imprimePerfil(obj);
+		for (var i= 0; i < table.length; i++) {
+			if (perfil_id == table[i].id) {
+				obj = table[i];
+				console.log ("obj=", obj);
+			}
+		}
+		if (obj == undefined) {
+			window.location.assign("index.html");
+		}
+		else {
+			imprimePerfil(obj);
+		}
 	}
+	
 
 }
 
+/*Habilita funcoes de perfil*/
+function MeuPerfil () {
+	var login = JSON.parse(localStorage.login);
+	var table, elementos;
+	if (login != undefined){
+		table = JSON.parse(localStorage.clientes);
+		table = table.concat(JSON.parse(localStorage.profissionais));
+		var obj;
+		for (var i=0; i<table.length; i++) {
+			if (login.email == table[i].email) {
+				obj = table[i];
+			}
+		}
+		elementos = document.getElementsByClassName("perfil-on");
+		for(var i=0; i<elementos.length; i++){
+			elementos[i].style.display = "";
+		}
+		imprimePerfil(obj);
+	}
+	else {
+		window.location.assign("index.html");
+	}
+}
+
+/*Preenche tela de perfil com os dados enviados pelo argumento*/
 function imprimePerfil (userObj) {
 	console.log("Entrou na funcao pra imprimirir")
 	document.getElementById("name-user").innerHTML = userObj.nome + " " + userObj.sobrenome;
-	document.getElementById("avaliacao").inner = "N/A";
+	document.getElementById("avaliacao").innerHTML = "N/A";
 	document.getElementById("contratacoes").innerHTML = "0";
 	document.getElementById("sexo").innerHTML = userObj.sexo;
 	document.getElementById("data_nascimento").innerHTML = userObj.data_nascimento;
-	document.getElementById("numero_telefone").innerHTML = userObj.num_telefone;
+	document.getElementById("numero_telefone").innerHTML = userObj.telefone;
 	document.getElementById("email").innerHTML = userObj.email;
 	document.getElementById("endereco").innerHTML = userObj.endereco +" "+ userObj.num_endereco +" "+ userObj.bairro+" "+
 	userObj.cidade+" "+ userObj.cidade;
@@ -266,7 +302,9 @@ function validaCadastroClient() {
 					email: document.getElementById("cemail").value,
 					senha: document.getElementById("csenha").value,
 					sexo: "" ,
-					data_nascimento: document.getElementById("cdate").value
+					data_nascimento: document.getElementById("cdate").value,
+					tipo: 0,
+					perfil: ""
 					};
 
 	var radio = document.getElementsByName("csexo");
@@ -306,8 +344,17 @@ function validaCadastroClient() {
 	if (resp) {
 		alert("Tudo OK - vai chamar a funcao gravaLocal");
 		gravarLocal(userObj, 0);
+		var logObj = {
+					email: "",
+					senha: ""
+				};
+		logObj.email = userObj.email;
+		logObj.senha = userObj.senha;
+		setLogin(logObj);
+		window.location.assign("perfil.html");
 	}
 
+	
 	return resp;
 }
 
@@ -330,7 +377,9 @@ function validaCadastroProf() {
 					uf: document.getElementById("puf").value,
 					cep: document.getElementById("pcep").value,
 					pontuacao: "",
-					tipo: "profissional"
+					tipo: 1,
+					perfil: "",
+					imagens: []
 					};
 
 	var radio = document.getElementsByName("psexo");
@@ -433,6 +482,47 @@ function trataResposta (id) {
 	}
 }
 
+function ativaAlteraImg(){
+	document.getElementById("fotoperfil").style.display = "block";
+	document.getElementById("altera-img").style.display = "none";
+}
+
+function alteraImg() {
+	var filesSelected = document.getElementById("fotoperfil").files;
+	var login = JSON.parse(localStorage.login);
+	var table = JSON.parse(localStorage.clientes);
+	table = table.concat(JSON.parse(localStorage.profissionais));
+	var obj;
+	for (var i=0; i<table.length; i++) {
+		if (login.email == table[i].email) {
+			obj = table[i];
+		}
+	}
+    if (filesSelected.length > 0) {
+      var fileToLoad = filesSelected[0];
+
+      var fileReader = new FileReader();
+
+      fileReader.onload = function(fileLoadedEvent) {
+        var srcData = fileLoadedEvent.target.result; // <--- data: base64
+        document.getElementById("img-perfil").src = srcData;
+
+        document.getElementById("fotoperfil").style.display = "none";
+		document.getElementById("altera-img").style.display = "block";
+		obj.perfil = srcData;
+		/*gravarLocal(obj, obj.tipo);*/
+		alert("Imagem Alterada");
+
+        /*var newImage = document.createElement('img');
+        newImage.src = srcData;
+
+        document.getElementById("imgTest").innerHTML = newImage.outerHTML;
+        alert("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
+        console.log("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);*/
+      }
+      fileReader.readAsDataURL(fileToLoad);
+    }
+}
 
 
 
