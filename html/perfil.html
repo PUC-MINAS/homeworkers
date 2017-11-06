@@ -23,7 +23,9 @@ dados cadastrais do usuário visto pelo próprio usuário
 	</header>
 	<div id="corpo">
 		<div>
-			<img id="img-perfil" class="foto-perfil" src="" alt="foto-perfil"/>
+			<img id="img-perfil" class="foto-perfil" src="" alt="foto-perfil"/><br>
+			<button id="altera-img" class="perfil-on" type="button" style="display: none" onclick="ativaAlteraImg();">Alterar Imagem Perfil</button>
+			<input type="file" id="fotoperfil" style="display: none" onchange="alteraImg();" />
 		</div>
 		<div>
 			<h1 id = "name-user" class="">Name User</h1>
