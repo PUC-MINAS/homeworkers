@@ -1,8 +1,16 @@
 /*Variáveis Globais*/
 var HTTPReq = new XMLHttpRequest();
 
+/*---------------------------------------------*/
 
 /*---------------------------------------------*/
+/*Funcoes CRUD para localStorage*/
+
+
+
+
+
+
 
 
 /*Pesquisa dados em localstorage --- incompleta*/
@@ -21,35 +29,27 @@ function pesquisarLocal(userObj) {
 }
 
 /*Grava dados em local storage*/
-/*userObj é um objeto com estrutura completa*/
-/*tipo é um inteiro que define o tipo de cliente. Clientes = 0, profissionais = 1*/
-function gravarLocal(userObj, tipo) {
-	if (localStorage.clientes == undefined){
-		localStorage.setItem("clientes", JSON.stringify([]));
+/*newObj é um objeto com estrutura completa*/
+/*newObj.tipo é um inteiro que define a tabela. Clientes = 0, profissionais = 1, login = 2*/
+function gravarLocal(newObj) {
+	alert("gravarLocal");
+	var table;
+	if (newObj.tipo == 0 || newObj.tipo == 1 ) {
+		table = readLocal(newObj.tipo);
+		newObj.id = table.length;
+		table[table.length] = newObj;
 	}
-	if (localStorage.profissionais == undefined){
-		localStorage.setItem("profissionais", JSON.stringify([]));
+	if (newObj.tipo == 2){
+		table = newObj;
 	}
-
-	if (tipo == 0) {
-		var table = JSON.parse(localStorage.clientes);
-		userObj.id = table.length;
-		table[table.length] = userObj;
-		localStorage.clientes = JSON.stringify(table);
-	}
-	else if (tipo == 1){
-		var table = JSON.parse(localStorage.profissionais);
-		userObj.id = table.length;
-		table[table.length] = userObj;
-		localStorage.profissionais = JSON.stringify(table);
-	}
-
+	console.log(table);
+	createLocal(table);
 }
 
 
 /*Pesquisa por profissionais em local storage*/
 function pesquisarProfissionais(sprof){
-	var table = JSON.parse(localStorage.profissionais);
+	var table = readLocal(1);
 	var b= [];
 	var str;
 
@@ -148,7 +148,8 @@ function imprimePesquisaProfissionais(userObj) {
 function entrar () {
 	var logObj = {
 					email: "",
-					senha: ""
+					senha: "",
+					tipo: 2
 				};
 	logObj.email = document.getElementById("email").value;
 	logObj.senha = document.getElementById("senha").value;
@@ -182,7 +183,9 @@ function sair () {
 }
 
 function setLogin (login) {
-	localStorage.setItem("login", JSON.stringify(login));
+	alert("setLogin");
+	console.log(login);
+	gravarLocal(login);
 	window.location.assign("perfil.html");
 }
 
@@ -191,7 +194,7 @@ function deleteLogin () {
 }
 
 function checkLogin () {
-	var log = JSON.parse(localStorage.login);
+	var log = readLocal(2);
 	var login = pesquisarLocal(log);
 	if (log.email == login.email && log.senha == login.senha) {
 		return true;
@@ -213,7 +216,7 @@ function perfil() {
 	console.log("entrou funcao perfil");
 	var perfil_id = lerParametroPerfil();
 	console.log("perfil_id = ", perfil_id);
-	var table = JSON.parse(localStorage.profissionais);
+	var table = readLocal(1);
 	console.log(table);
 	var obj;
 	if (perfil_id == null) {
@@ -239,15 +242,21 @@ function perfil() {
 
 /*Habilita funcoes de perfil*/
 function MeuPerfil () {
-	var login = JSON.parse(localStorage.login);
+	var login = readLocal(2);
 	var table, elementos;
 	if (login != undefined){
-		table = JSON.parse(localStorage.clientes);
-		table = table.concat(JSON.parse(localStorage.profissionais));
+		table = readLocal(0);
+		table = table.concat(readLocal(1));
 		var obj;
 		for (var i=0; i<table.length; i++) {
 			if (login.email == table[i].email) {
 				obj = table[i];
+			}
+		}
+		if (obj.tipo == 0) {
+			elementos = document.getElementsByClassName("p-prof");
+			for(var i=0; i<elementos.length; i++){
+				elementos[i].style.display = "none";
 			}
 		}
 		elementos = document.getElementsByClassName("perfil-on");
@@ -268,12 +277,14 @@ function imprimePerfil (userObj) {
 	document.getElementById("avaliacao").innerHTML = "N/A";
 	document.getElementById("contratacoes").innerHTML = "0";
 	document.getElementById("sexo").innerHTML = userObj.sexo;
+	document.getElementById("profissao").innerHTML = userObj.profissao;
 	document.getElementById("data_nascimento").innerHTML = userObj.data_nascimento;
 	document.getElementById("numero_telefone").innerHTML = userObj.telefone;
 	document.getElementById("email").innerHTML = userObj.email;
 	document.getElementById("endereco").innerHTML = userObj.endereco +" "+ userObj.num_endereco +" "+ userObj.bairro+" "+
-	userObj.cidade+" "+ userObj.cidade;
+	userObj.cidade+" "+ userObj.uf;
 	document.getElementById("cep").innerHTML = userObj.cep;
+	document.getElementById("img-perfil").src = userObj.perfil;
 }
 
 
@@ -343,10 +354,11 @@ function validaCadastroClient() {
 
 	if (resp) {
 		alert("Tudo OK - vai chamar a funcao gravaLocal");
-		gravarLocal(userObj, 0);
+		gravarLocal(userObj);
 		var logObj = {
 					email: "",
-					senha: ""
+					senha: "",
+					tipo: 2
 				};
 		logObj.email = userObj.email;
 		logObj.senha = userObj.senha;
@@ -453,7 +465,6 @@ function validaCadastroProf() {
 
 
 	if (resp) {
-		alert("Tudo OK - vai chamar a funcao gravaLocal");
 		gravarLocal(userObj, 1);
 	}
 
@@ -585,76 +596,3 @@ function cadastrar(){
 			window.location.assign("index.html");
 
 }
-
-/*Grava dados em local storage*/
-function gravarLocal2 (userObj) {
-	userObj.id = localStorage.length;
-	var userObjJSON = JSON.stringify(userObj);
-	localStorage.setItem( userObj.email , userObjJSON);
-	/*alert(JSON.stringify(userObj));*/
-}
-
-/**************************************************************************/
-/*Funcoes para Cookies --- Incompletas*/
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
-
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
-
-function deleteCookie(cname) {
-	setCookie(cname,"",-1);
-}
-
-function checkUserOnline(argument) {
-	var logObj = {
-					email: "",
-					senha: ""
-				};
-	logObj.email = getCookie("email");
-	logObj.senha = getCookie("senha");
-
-	var obj = pesquisarBD(logObj);
-
-	if (obj != null) {
-		if (obj.email == logObj.email && obj.senha == logObj.senha){
-			alert("Usuário " + obj.nome + "ja estava logado");
-
-			/*ligar funçoes de usuario logado*/
-		}
-		else {
-			deleteCookie("email");
-			deleteCookie("senha");
-			var str = location.href;
-			if (str.indexOf("perfil") != -1 ) {
-				window.location.assign("login.html");
-			}
-		}
-	}
-	else{
-		deleteCookie("email");
-		deleteCookie("senha");
-		if (str.indexOf("perfil") != -1 ) {
-			window.location.assign("login.html");
-		}
-	}
-}
-/*******************************************************************************/
-
