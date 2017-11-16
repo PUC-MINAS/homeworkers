@@ -1,0 +1,114 @@
+@charset "UTF-8";
+
+/* define margin e padding de todos os elementos para 0*/
+* {
+	margin: 0;
+	padding: 0;
+}
+
+/**/
+body {
+  background-color: #fffaf0;
+  font-family: Arial;
+  width: 100%;
+}
+
+/**/
+header {
+	position: fixed;
+	top: 0;
+	background-color: #d14836; 
+	width: 100%;
+	padding: 5px 0px 5px 10px;
+}
+
+.logo{
+	font-size: 34px;
+	color: white;
+}
+
+header div {
+	display: inline-block;
+}
+
+div.icons {
+	float: right;
+	position: relative;
+	left: -30px;
+
+}
+
+div.icons img {
+	width: 40px;
+	height: 40px;
+	border: 1px solid black;
+	display: inline-block;
+}
+
+#corpo {
+	margin-top: 100px;	
+}
+
+/*index*/
+div.bprofissional{
+	color: #004466;
+	background-color: #fdeddd;
+	width: 125px;
+	height: 125px;
+	display: inline-grid;
+	border: 2px solid #cc5200;
+	padding: 8px;
+	margin:16px;
+	text-align: center;
+	
+}
+#bpedreiro{
+	
+}
+
+#bbombeirohidraulico{
+
+}
+
+#bdiarista{
+	
+}
+
+#bjardineiro{
+	
+}
+
+#bpintor{
+	
+}
+
+#beletricista{
+	
+}
+/*index*/
+
+
+footer {
+	position: absolute;
+	bottom:0;
+	font-size: 0.9em;
+	width: 100%;
+	height: 40px;
+	padding-top: 5px;
+	background-color: black;
+	color : white;
+}
+
+footer p {
+	text-align: center;
+}
+
+/*.clear = limpa posicionamento flutuante. deve ser adicionado uma <div class="clear"> vazia após o elemento com float */
+.clear { 
+	clear: both;
+}
+
+/*.a-noformat - limpar formatação da tag <a>*/
+.a-noformat {
+	text-decoration: none; 
+}
