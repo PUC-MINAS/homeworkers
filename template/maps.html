@@ -8,7 +8,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>HomeWorker</title>
+        <title>HomeWorker - Mapa</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -39,15 +39,23 @@
                 <a class="nav-link js-scroll-trigger" href="index.html#Profissionais">Profissionais</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="newpage.html">Nova pagina</a>
+                <a class="nav-link js-scroll-trigger" href="maps.html">Mapa</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="index.html#Contato">Contato</a>
+                <a class="nav-link js-scroll-trigger" href="index.html#Contato">Cadastro</a>
               </li>
             </ul>
           </div>
         </div>
       </nav>
+      
+      <!--Implementação-->
+        
+      
+              <div id="mapa" style="width:500px  height:500px"></div>
+ 
+                    
+      <!--Fim Implementação -->
 
       <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
     <div class="scroll-top d-lg-none">
@@ -56,6 +64,21 @@
       </a>
     </div>
 
+    <!--Mapa-->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    
+    <!-- Maps API Javascript -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv5-n9oUWXvcd-MQz2XiqEGLYtFR8oOdo&callback=initMap"></script>
+    
+    <!-- Caixa de informação -->
+    <script src="js/infobox.js"></script>
+
+    <!-- Agrupamento dos marcadores -->
+    <script src="js/markerclusterer.js"></script>
+
+    <!-- Arquivo de inicialização do mapa -->
+    <script src="js/mapa.js"></script>
+    <!--Fim Mapa-->
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
