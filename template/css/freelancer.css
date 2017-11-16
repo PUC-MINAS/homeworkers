@@ -8,9 +8,18 @@
 #page-top .new-pages{
   background-color:#18BC9C;
 }
-#login-dropdown {
-  margin:auto;
-}
+.btn.btn-primary.dropdown-toggle.navbar-dropdown{
+    font-size: 14px;
+    padding: 11px;
+    text-transform: uppercase;
+    color: white;
+    border-color: white; }
+    #mainNav .navbar-dropdown:focus, #mainNav .navbar-dropdown:hover {
+      color: white;
+      border-color: #18BC9C;
+      background-color: #18BC9C; }
+
+
 
  /*original*/
  body {

@@ -2866,6 +2866,7 @@ tbody.collapse.show {
   position: relative;
 }
 
+
 .dropdown-toggle::after {
   display: inline-block;
   width: 0;
