@@ -5,10 +5,12 @@
  */
 
 /*implantado*/
-.page-top, .new-pages{
+#page-top .new-pages{
   background-color:#18BC9C;
 }
-
+#login-dropdown {
+  margin:auto;
+}
 
  /*original*/
  body {
