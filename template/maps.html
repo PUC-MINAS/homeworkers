@@ -27,88 +27,97 @@
     
       <!-- Navigation -->
       <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-        <div class="container">
-          <a class="navbar-brand js-scroll-trigger" href="index.html#page-top">HomeWorker</a>
-          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu<i class="fa fa-bars"></i></button>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="index.html#Profissionais">Profissionais</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="maps.html">Mapa</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="index.html#Contato">Cadastro</a>
-              </li>
-              <li class="nav-item">
-                <div class="dropdown">
-                  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">LOGIN
-                    <span class="caret"></span>
-                  </button>
-  
-                  <ul class="dropdown-menu" id="login-dropdown">  
-                    <div class="control-group">
-                      
-                      <li class="dropdown-header">Email</li>
-                        <input class="form-control" id="email" type="email" placeholder="Email" required data-validation-required-message="Por favor entre com seu email.">
-                        <p class="help-block text-danger"></p>
-
-                      
-                      <li class="dropdown-header">Senha</li>
-                        <input class="form-control" id="phone" type="password" placeholder="Senha" required data-validation-required-message="Por favor entre com sua senha.">
-                        <p class="help-block text-danger"></p>
-              </li>
-            </ul>
+          <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">HomeWorker</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+              Menu
+              <i class="fa fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+              <ul class="navbar-nav ml-auto">
+    
+                <li class="nav-item">
+                  <a class="nav-link js-scroll-trigger" href="index.html#portfolio">Profissionais</a>
+                </li>
+    
+                <li class="nav-item">
+                  <a class="nav-link js-scroll-trigger" href="maps.html#sobre">Mapa</a>
+                </li>
+    
+                <li class="nav-item">
+                  <a class="nav-link js-scroll-trigger" href="index.html#Contato">Cadastro</a>
+                </li>
+    
+                <li class="nav-item">
+                    <div class="dropdown">
+                      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">LOGIN
+                        <span class="caret"></span>
+                      </button>
+                      <ul class="dropdown-menu" id="login-dropdown">  
+                        <div class="control-group">
+                          <li class="dropdown-header">Email
+                          </li>
+                          <input class="form-control" id="email" type="email" placeholder="Email" required data-validation-required-message="Por favor entre com seu email.">
+                          <p class="help-block text-danger">
+                          </p>                      
+                          <li class="dropdown-header">Senha
+                          </li>
+                          <input class="form-control" id="phone" type="password" placeholder="Senha" required data-validation-required-message="Por favor entre com sua senha.">
+                          <p class="help-block text-danger">
+                          </p>
+                      </ul>
+                    </div>
+                  </li>
+              </ul>       
+            </div>
           </div>
-        </div>
       </nav>
       
       <!--Mapa-->
       <div class="container-fluid" id="sobre">
         <div class="row">
-          <div class="col-md-12 col-lg-12" id="mapa" style="height: 1000px"></div>
+          <div class="col-md-12 col-lg-12" id="mapa" style="height: 900px"></div>
         </div>
       </div>
 
 
       <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
-    <div class="scroll-top d-lg-none">
-      <a class="btn btn-primary js-scroll-trigger" href="#page-top">
-        <i class="fa fa-chevron-up"></i>
-      </a>
-    </div>
+      <div class="scroll-top d-lg-none">
+        <a class="btn btn-primary js-scroll-trigger" href="#page-top">
+          <i class="fa fa-chevron-up"></i>
+        </a>
+      </div>
 
-    <!--Mapa-->
-    <script src="js/jquery-3.2.1.min.js"></script>
-    
-    <!-- Maps API Javascript -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv5-n9oUWXvcd-MQz2XiqEGLYtFR8oOdo&callback=initMap"></script>
-    
-    <!-- Caixa de informação -->
-    <script src="js/infobox.js"></script>
+      <!--Mapa-->
+      <script src="js/jquery-3.2.1.min.js"></script>
+      
+      <!-- Maps API Javascript -->
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv5-n9oUWXvcd-MQz2XiqEGLYtFR8oOdo&callback=initMap"></script>
+      
+      <!-- Caixa de informação -->
+      <script src="js/infobox.js"></script>
 
-    <!-- Agrupamento dos marcadores -->
-    <script src="js/markerclusterer.js"></script>
+      <!-- Agrupamento dos marcadores -->
+      <script src="js/markerclusterer.js"></script>
 
-    <!-- Arquivo de inicialização do mapa -->
-    <script src="js/mapa.js"></script>
-    <!--Fim Mapa-->
+      <!-- Arquivo de inicialização do mapa -->
+      <script src="js/mapa.js"></script>
+      <!--Fim Mapa-->
 
-    
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      
+      <!-- Bootstrap core JavaScript -->
+      <script src="vendor/jquery/jquery.min.js"></script>
+      <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Plugin JavaScript -->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+      <!-- Plugin JavaScript -->
+      <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Contato Form JavaScript -->
-    <script src="js/jqBootstrapValidation.js"></script>
-    <script src="js/Contato_me.js"></script>
+      <!-- Contato Form JavaScript -->
+      <script src="js/jqBootstrapValidation.js"></script>
+      <script src="js/Contato_me.js"></script>
 
-    <!-- Custom scripts for this template -->
-    <script src="js/freelancer.min.js"></script>
+      <!-- Custom scripts for this template -->
+      <script src="js/freelancer.min.js"></script>
 
   </body>
 
