@@ -35,6 +35,21 @@ function createLocal(table){
 	}
 }
 
+function updateLocal(obj) {
+	var table;
+	if (obj.tipo == 0) {
+		table = readLocal(0);
+	}
+	else if (obj.tipo == 1) {
+		table = readLocal(0);
+	}
+
+	table[obj.id] = obj;
+
+	createLocal(table);	
+}
+
+
 /*Inicializa as tabelas em localStorage se elas não estiveram sido inicializadas*/
 /*0 = clientes, 1 = profissionais, 2 = login*/
 function setLocal () {
