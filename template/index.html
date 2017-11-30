@@ -20,18 +20,7 @@
 
     <!-- Custom styles for this template -->
     <link href="css/freelancer.min.css" rel="stylesheet">
-<<<<<<< HEAD
-    <style>
-      ul#login-dropdwon
-      {
-        min-width: 20rem;
-        padding: 10rem 0;
-      }
-    </style>
-=======
     <link href="css/style2.css" rel="stylesheet">
->>>>>>> master
-
   </head>
 
   <body id="page-top">
@@ -198,9 +187,9 @@
             <!-- To configure the Contato form email address, go to mail/Contato_me.php and update the email address in the PHP file on line 19. -->
             <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
 
-            <div id="div-botoes">
-              <button onclick="ativaFormClient();">Cliente</button>
-              <button onclick="ativaFormProf();">Profissional</button>
+            <div  id="div-botoes" align='center'>
+              <button class="btn btn-primary" onclick="ativaFormClient();">Cliente</button>
+              <button class="btn btn-primary" onclick="ativaFormProf();">Profissional</button>
             </div>
 
             <div id="form-client" style="display: none;">
@@ -474,7 +463,7 @@
             <div class="row">
               <div class="col-lg-8 mx-auto">
                 <div class="modal-body">
-                  <h2>Project Title</h2>
+                  <h2>Pedreiro</h2>
                   <hr class="star-primary">
                   <img class="img-fluid img-centered" src="img/portfolio/cabin.png" alt="">
                   <p>Use this area of the page to describe your project. The icon above is part of a free icon set by
@@ -518,7 +507,7 @@
             <div class="row">
               <div class="col-lg-8 mx-auto">
                 <div class="modal-body">
-                  <h2>Project Title</h2>
+                  <h2>Bombeiro Hidraulico</h2>
                   <hr class="star-primary">
                   <img class="img-fluid img-centered" src="img/portfolio/cake.png" alt="">
                   <p>Use this area of the page to describe your project. The icon above is part of a free icon set by
@@ -562,7 +551,7 @@
             <div class="row">
               <div class="col-lg-8 mx-auto">
                 <div class="modal-body">
-                  <h2>Project Title</h2>
+                  <h2>Diarista</h2>
                   <hr class="star-primary">
                   <img class="img-fluid img-centered" src="img/portfolio/circus.png" alt="">
                   <p>Use this area of the page to describe your project. The icon above is part of a free icon set by
@@ -606,7 +595,7 @@
             <div class="row">
               <div class="col-lg-8 mx-auto">
                 <div class="modal-body">
-                  <h2>Project Title</h2>
+                  <h2>Jardineiro</h2>
                   <hr class="star-primary">
                   <img class="img-fluid img-centered" src="img/portfolio/game.png" alt="">
                   <p>Use this area of the page to describe your project. The icon above is part of a free icon set by
@@ -650,7 +639,7 @@
             <div class="row">
               <div class="col-lg-8 mx-auto">
                 <div class="modal-body">
-                  <h2>Project Title</h2>
+                  <h2>Pintor</h2>
                   <hr class="star-primary">
                   <img class="img-fluid img-centered" src="img/portfolio/safe.png" alt="">
                   <p>Use this area of the page to describe your project. The icon above is part of a free icon set by
@@ -694,7 +683,7 @@
             <div class="row">
               <div class="col-lg-8 mx-auto">
                 <div class="modal-body">
-                  <h2>Project Title</h2>
+                  <h2>Eletricista</h2>
                   <hr class="star-primary">
                   <img class="img-fluid img-centered" src="img/portfolio/submarine.png" alt="">
                   <p>Use this area of the page to describe your project. The icon above is part of a free icon set by
@@ -744,6 +733,24 @@
     <script src="js/localstorage.js"></script>
 
     <script src="js/scripts.js"></script>
+
+    
+
+    <!--Mapa-->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    
+    <!-- Maps API Javascript -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv5-n9oUWXvcd-MQz2XiqEGLYtFR8oOdo&callback=initMap"></script>
+    
+    <!-- Caixa de informação -->
+    <script src="js/infobox.js"></script>
+
+    <!-- Agrupamento dos marcadores -->
+    <script src="js/markerclusterer.js"></script>
+
+    <!-- Arquivo de inicialização do mapa -->
+    <script src="js/mapa.js"></script>
+    <!--Fim Mapa-->
 
   </body>
 

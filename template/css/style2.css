@@ -22,3 +22,9 @@ input#pdate {
     color: #495057;
     opacity: 0.75;
 }
+
+#div-botoes>.btn {
+    width: 7em;
+    height: 2em;
+    padding: 0px !important;
+}
