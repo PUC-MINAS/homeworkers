@@ -3,30 +3,8 @@ var HTTPReq = new XMLHttpRequest();
 
 /*---------------------------------------------*/
 
-/*---------------------------------------------*/
-/*Funcoes CRUD para localStorage*/
 
 
-
-
-
-
-
-
-/*Pesquisa dados em localstorage --- incompleta*/
-/*userObj é um objeto contando email e senha*/
-function pesquisarLocal(userObj) {
-	var table = JSON.parse(localStorage.clientes);
-	table = table.concat(JSON.parse(localStorage.profissionais));
-
-	for (var i=0; i < table.length; i++) {
-		if (userObj.email == table[i].email) {
-			return table[i];
-		}
-	}
-
-	return false;	
-}
 
 /*Grava dados em local storage*/
 /*newObj é um objeto com estrutura completa*/
@@ -502,7 +480,6 @@ function alteraImg() {
 	var filesSelected = document.getElementById("fotoperfil").files;
 	var login = JSON.parse(localStorage.login);
 	var table = JSON.parse(localStorage.clientes);
-	table = table.concat(JSON.parse(localStorage.profissionais));
 	var obj;
 	for (var i=0; i<table.length; i++) {
 		if (login.email == table[i].email) {
@@ -521,7 +498,7 @@ function alteraImg() {
         document.getElementById("fotoperfil").style.display = "none";
 		document.getElementById("altera-img").style.display = "block";
 		obj.perfil = srcData;
-		/*gravarLocal(obj, obj.tipo);*/
+		updateLocal (obj);
 		alert("Imagem Alterada");
 
         /*var newImage = document.createElement('img');
@@ -532,6 +509,36 @@ function alteraImg() {
         console.log("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);*/
       }
       fileReader.readAsDataURL(fileToLoad);
+    }
+}
+
+function incluirImg () {
+	var filesSelected = document.getElementById("incluirfotos").files;
+	var login = JSON.parse(localStorage.login);
+	var table = JSON.parse(localStorage.profissionais);
+	var obj, qImagens;
+	for (var i=0; i<table.length; i++) {
+		if (login.email == table[i].email) {
+			obj = table[i];
+		}
+	}
+	qImagens = obj.imagens.length;
+    if (filesSelected.length > 0) {
+      var fileToLoad = filesSelected[0];
+
+      var fileReader = new FileReader();
+
+      fileReader.onload = function(fileLoadedEvent) {
+        var srcData = fileLoadedEvent.target.result; // <--- data: base64
+        //document.getElementById("img-perfil").src = srcData;
+
+        //document.getElementById("fotoperfil").style.display = "none";
+		//document.getElementById("altera-img").style.display = "block";
+		obj.imagens[qImagens] = srcData;
+		updateLocal(obj);
+		alert("Imagem Alterada");
+	  }
+	  fileReader.readAsDataURL(fileToLoad);
     }
 }
 
@@ -595,4 +602,20 @@ function cadastrar(){
 
 			window.location.assign("index.html");
 
+}
+
+
+/*Pesquisa dados em localstorage --- incompleta*/
+/*userObj é um objeto contando email e senha*/
+function pesquisarLocal(userObj) {
+	var table = JSON.parse(localStorage.clientes);
+	table = table.concat(JSON.parse(localStorage.profissionais));
+
+	for (var i=0; i < table.length; i++) {
+		if (userObj.email == table[i].email) {
+			return table[i];
+		}
+	}
+
+	return false;	
 }
