@@ -194,18 +194,18 @@
             </div>
 
             <div id="form-client" style="display: none;">
-              <form name="sentMessage" id="ContatoForm" action onsubmit="return validaCadastroClient();" novalidate>
+              <form name="sentMessage" id="ContatoForm" onsubmit="return validaCadastroClient();" novalidate>
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
                   <label>Nome</label>
-                  <input class="form-control" id="name" type="text" placeholder="Nome" required data-validation-required-message="Por favor digite seu nome.">
+                  <input class="form-control" id="cnome" type="text" placeholder="Nome" required data-validation-required-message="Por favor digite seu nome.">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
               <div class="control-group">
                   <div class="form-group floating-label-form-group controls">
                     <label>Sobrenome</label>
-                    <input class="form-control" id="sobrenome" type="text" placeholder="Sobrenome" required data-validation-required-message="Por favor digite seu sobrenome.">
+                    <input class="form-control" id="csobrenome" type="text" placeholder="Sobrenome" required data-validation-required-message="Por favor digite seu sobrenome.">
                     <p class="help-block text-danger"></p>
                   </div>
                 </div>
@@ -213,15 +213,15 @@
                     <div class="form-group floating-label-form-group controls">
                       <!--<label>Sexo: </label>-->
                       <!--<input class="form-control" id="sobrenome" type="text" placeholder="Sobrenome" required data-validation-required-message="Por favor digite seu sobrenome.">-->
-                      <label class="sexo" for="pmasculino">Masculino</label><input type="radio" name="psexo" id="pmasculino" value="masculino" checked="checked" class="sexo">
-                      <label class="sexo" for="pfeminino">Feminino</label><input type="radio" name="psexo" id="pfeminino" value="feminino" class="sexo">
+                      <label class="sexo" for="cmasculino">Masculino</label><input type="radio" name="psexo" id="pmasculino" value="masculino" checked="checked" class="sexo">
+                      <label class="sexo" for="cfeminino">Feminino</label><input type="radio" name="psexo" id="pfeminino" value="feminino" class="sexo">
                       <p class="help-block text-danger"></p>
                     </div>
                   </div>
               <div class="control-group">
                   <div class="form-group floating-label-form-group controls">
                     <label>Nascimento</label>
-                    <input class="form-control" name="data" id="pdate" type="date" placeholder="Data" required data-validation-required-message="Por favor digite seu telefone.">
+                    <input class="form-control" name="data" id="cdate" type="date" placeholder="Data" required data-validation-required-message="Por favor digite seu telefone.">
                     <p class="help-block text-danger"></p>
                   </div>
                 </div>
@@ -229,21 +229,21 @@
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
                   <label>Email</label>
-                  <input class="form-control" id="email" type="email" placeholder="Email" required data-validation-required-message="Por favor entre com um email.">
+                  <input class="form-control" id="cemail" type="email" placeholder="Email" required data-validation-required-message="Por favor entre com um email.">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
                   <label>Senha</label>
-                  <input class="form-control" id="phone" type="password" placeholder="Senha" required data-validation-required-message="Por favor entre com uma senha.">
+                  <input class="form-control" id="csenha" type="password" placeholder="Senha" required data-validation-required-message="Por favor entre com uma senha.">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls">
                   <label>Confirme Senha</label>
-                  <input class="form-control" id="message" type="password" placeholder="Confirme a senha" required data-validation-required-message="Por favor confirme sua senha.">
+                  <input class="form-control" id="cconfirm-senha" type="password" placeholder="Confirme a senha" required data-validation-required-message="Por favor confirme sua senha.">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
@@ -313,7 +313,7 @@
                       <div class="control-group">
                           <div class="form-group floating-label-form-group controls">
                             <label>CEP</label>
-                            <input class="form-control" name="cep" id="pcep" type="text" placeholder="CEP" required data-validation-required-message="Por favor digite seu CEP.">
+                            <input class="form-control" onchange="pesquisaCep();" name="cep" id="pcep" type="text" placeholder="CEP" required data-validation-required-message="Por favor digite seu CEP.">
                             <p class="help-block text-danger"></p>
                           </div>
                         </div>
@@ -355,21 +355,21 @@
                     <div class="control-group">
                       <div class="form-group floating-label-form-group controls">
                         <label>Email</label>
-                        <input class="form-control" id="email" type="email" placeholder="Email" required data-validation-required-message="Por favor entre com um email.">
+                        <input class="form-control" id="pemail" type="email" placeholder="Email" required data-validation-required-message="Por favor entre com um email.">
                         <p class="help-block text-danger"></p>
                       </div>
                     </div>
                     <div class="control-group">
                       <div class="form-group floating-label-form-group controls">
                         <label>Senha</label>
-                        <input class="form-control" id="phone" type="password" placeholder="Senha" required data-validation-required-message="Por favor entre com uma senha.">
+                        <input class="form-control" id="psenha" type="password" placeholder="Senha" required data-validation-required-message="Por favor entre com uma senha.">
                         <p class="help-block text-danger"></p>
                       </div>
                     </div>
                     <div class="control-group">
                       <div class="form-group floating-label-form-group controls">
                         <label>Confirme Senha</label>
-                        <input class="form-control" id="message" type="password" placeholder="Confirme a senha" required data-validation-required-message="Por favor confirme sua senha.">
+                        <input class="form-control" id="pconfirm-senha" type="password" placeholder="Confirme a senha" required data-validation-required-message="Por favor confirme sua senha.">
                         <p class="help-block text-danger"></p>
                       </div>
                     </div>
@@ -726,7 +726,7 @@
 
     <!-- Contato Form JavaScript -->
     <script src="js/jqBootstrapValidation.js"></script>
-    <script src="js/Contato_me.js"></script>
+    <script src="js/Contact_me.js"></script>
 
     <!-- Custom scripts for this template -->
     <script src="js/freelancer.min.js"></script>
