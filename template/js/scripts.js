@@ -295,7 +295,8 @@ function validaCadastroClient() {
 					tipo: 0,
 					perfil: ""
 					};
-
+				alert("Função validaCadastroClient");
+	var msg = '';
 	var radio = document.getElementsByName("csexo");
 	var confirma_senha = document.getElementById("cconfirm-senha").value;
 	var resp= true;
@@ -307,28 +308,35 @@ function validaCadastroClient() {
 	}
 
 	if(userObj.nome == ""){
-		document.getElementById("cerror-nome").innerHTML = "<br>Campo Obrigatório!";
+		//document.getElementById("cerror-nome").innerHTML = "<br>Campo Obrigatório!";
+		msg += "Campo nome obrigatório!\n";
 		resp= false;
 	}
 
 	if(userObj.sobrenome == ""){
-		document.getElementById("cerror-sobrenome").innerHTML = "<br>Campo Obrigatório!";
+		//document.getElementById("cerror-sobrenome").innerHTML = "<br>Campo Obrigatório!";
+		msg += "Campo sobrenome obrigatório!\n";
 		resp= false;
 	}
 
 	if(userObj.data_nascimento == ""){
-		document.getElementById("cerror-data").innerHTML = "<br>Campo Obrigatório!";
+		//document.getElementById("cerror-data").innerHTML = "<br>Campo Obrigatório!";
+		msg += "Campo data de nascimento obrigatório!\n";
 		resp= false;
 	}
 
 	if(userObj.senha != confirma_senha){
-		document.getElementById("cerror-confirmasenha").innerHTML = "<br>Senhas não conferem!";
+		//document.getElementById("cerror-confirmasenha").innerHTML = "<br>Senhas não conferem!";
+		msg += "Senhas não conferem!\n";
 		resp= false;
 	}
 	else if (userObj.senha.length < 8) {
-		document.getElementById("cerror-senha").innerHTML = "<br>A senha deve ter no mínimo 8 caracteres!";
+		//document.getElementById("cerror-senha").innerHTML = "<br>A senha deve ter no mínimo 8 caracteres!";
+		msg += 'A senha deve ter no mínimo 8 caracteres!';
 		resp= false;
 	}
+
+	
 
 	if (resp) {
 		alert("Tudo OK - vai chamar a funcao gravaLocal");
@@ -342,6 +350,9 @@ function validaCadastroClient() {
 		logObj.senha = userObj.senha;
 		setLogin(logObj);
 		window.location.assign("perfil.html");
+	}
+	else {
+		alert(msg);
 	}
 
 	
@@ -371,7 +382,9 @@ function validaCadastroProf() {
 					perfil: "",
 					imagens: []
 					};
-
+	
+	var msg = "";
+	alert("Função validaCadastroProf();");
 	var radio = document.getElementsByName("psexo");
 	var confirma_senha = document.getElementById("pconfirm-senha").value;
 	var resp= true;
@@ -383,67 +396,81 @@ function validaCadastroProf() {
 	}
 
 	if(userObj.nome == ""){
-		document.getElementById("perror-nome").innerHTML = "<br>Campo Obrigatório!";
+		//document.getElementById("perror-nome").innerHTML = "<br>Campo Obrigatório!";
+		msg += "Campo nome obrigatório!\n";
 		resp= false;
 	}
 
 	if(userObj.sobrenome == ""){
-		document.getElementById("perror-sobrenome").innerHTML = "<br>Campo Obrigatório!";
+		//document.getElementById("perror-sobrenome").innerHTML = "<br>Campo Obrigatório!";
+		msg += "Campo sobrenome obrigatório!\n";
 		resp= false;
 	}
 
 	if(userObj.data_nascimento == ""){
-		document.getElementById("perror-data").innerHTML = "<br>Campo Obrigatório!";
+		//document.getElementById("perror-data").innerHTML = "<br>Campo Obrigatório!";
+		msg += "Campo data obrigatório!\n";
 		resp= false;
 	}
 
 	if (userObj.telefone == "") {
-		document.getElementById('perror-telefone').innerHTML = "<br>Campo Obrigatório!";
+		//document.getElementById('perror-telefone').innerHTML = "<br>Campo Obrigatório!";
+		msg += "Campo telefone obrigatório!\n";
 		resp = false;
 	}
 
 	if (userObj.endereco == "") {
-		document.getElementById('perror-endereco').innerHTML = "<br>Campo Obrigatório!";
+		//document.getElementById('perror-endereco').innerHTML = "<br>Campo Obrigatório!";
 		resp = false;
 	}
 
 	if (userObj.num_endereco == "") {
-		document.getElementById('perror-numero').innerHTML = "<br>Campo Obrigatório!";
+		//document.getElementById('perror-numero').innerHTML = "<br>Campo Obrigatório!";
+		msg += "Campo número da residencia obrigatório!\n";
 		resp = false;
 	}
 
 	if (userObj.bairro == "") {
-		document.getElementById('perror-bairro').innerHTML = "<br>Campo Obrigatório!";
+		//document.getElementById('perror-bairro').innerHTML = "<br>Campo Obrigatório!";
+		msg += "Campo bairro obrigatório!\n";
 		resp = false;
 	}
 
 	if (userObj.cidade == "") {
-		document.getElementById('perror-cidade').innerHTML = "<br>Campo Obrigatório!";
+		//document.getElementById('perror-cidade').innerHTML = "<br>Campo Obrigatório!";
+		msg += "Campo cidade obrigatório!\n";
 		resp = false;
 	}
 
 	if (userObj.estado == "") {
-		document.getElementById('perror-estado').innerHTML = "<br>Campo Obrigatório!";
+		//document.getElementById('perror-estado').innerHTML = "<br>Campo Obrigatório!";
+		msg += "Campo estado obrigatório!\n";
 		resp = false;
 	}
 
 	if (userObj.cep == "") {
-		document.getElementById('perror-cep').innerHTML = "<br>Campo Obrigatório!";
+		//document.getElementById('perror-cep').innerHTML = "<br>Campo Obrigatório!";
+		msg += "Campo CEP obrigatório!\n";
 		resp = false;
 	}
 
 	if(userObj.senha != confirma_senha){
-		document.getElementById("perror-confirmasenha").innerHTML = "<br>Senhas não conferem!";
+		//document.getElementById("perror-confirmasenha").innerHTML = "<br>Senhas não conferem!";
+		msg += "Senhas não conferem\n";
 		resp= false;
 	}
 	else if (userObj.senha.length < 8) {
-		document.getElementById("perror-senha").innerHTML = "<br>A senha deve ter no mínimo 8 caracteres!";
+		//document.getElementById("perror-senha").innerHTML = "<br>A senha deve ter no mínimo 8 caracteres!";
+		msg += "A senha deve ter no mínimo 8 caracteres!\n";
 		resp=false;
 	}
 
 
 	if (resp) {
 		gravarLocal(userObj, 1);
+	}
+	else {
+		alert(msg);
 	}
 
 	return resp;
