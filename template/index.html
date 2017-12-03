@@ -257,6 +257,9 @@
 
             <div id="form-prof" style="display: none;">
                 <form name="sentMessage" id="ContatoForm" onsubmit="return validaCadastroProf();" novalidate>
+                  <input type="hidden" id="ptitulo" value="">
+                  <input type="hidden" id="plat">
+                  <input type="hidden" id="plon">
                     <div class="control-group">
                       <div class="form-group floating-label-form-group controls">
                         <label>Nome</label>
@@ -320,7 +323,7 @@
                       <div class="control-group">
                           <div class="form-group floating-label-form-group controls">
                             <label>Endereço</label>
-                            <input class="form-control" name="endereco" id="pendereco" type="text" placeholder="Endereço" required data-validation-required-message="Por favor digite seu endereço.">
+                            <input class="form-control" name="rua" id="prua" type="text" placeholder="Endereço(ex: rua, av.)" required data-validation-required-message="Por favor digite seu endereço.">
                             <p class="help-block text-danger"></p>
                           </div>
                         </div>
@@ -355,7 +358,7 @@
                     <div class="control-group">
                       <div class="form-group floating-label-form-group controls">
                         <label>Email</label>
-                        <input class="form-control" id="pemail" type="email" placeholder="Email" required data-validation-required-message="Por favor entre com um email.">
+                        <input class="form-control" id="pemail" type="email" placeholder="Email" required data-validation-required-message="Por favor entre com um email." onchange="pegaCoordenadas();">
                         <p class="help-block text-danger"></p>
                       </div>
                     </div>

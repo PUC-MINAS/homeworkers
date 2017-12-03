@@ -3,6 +3,30 @@ var HTTPReq = new XMLHttpRequest();
 
 /*---------------------------------------------*/
 
+function divrecur () {
+	$("div#dfiltro").css("z-index", 1000);
+
+	var tela = $(window).width();
+	var tam = $("#mainNav").height();
+	tam = tam + $("div#dfiltro input").height()+3;
+	if (tela > '991'){
+		tam += 30;
+	}
+	$("div#dfiltro").css("top", tam);
+
+	$(window).resize(function(){
+		var tela = $(window).width();
+		var tam = $("#mainNav").height();
+		tam = tam + $("div#dfiltro input").height() + 3;
+		if (tela > '991'){
+			tam += 30;
+		}
+		$("div#dfiltro").css("top", tam);
+		
+		//console.log('resize');
+		//console.log($("div#dfiltro").css("top"));
+	});
+}
 
 
 
@@ -10,7 +34,7 @@ var HTTPReq = new XMLHttpRequest();
 /*newObj é um objeto com estrutura completa*/
 /*newObj.tipo é um inteiro que define a tabela. Clientes = 0, profissionais = 1, login = 2*/
 function gravarLocal(newObj) {
-	alert("gravarLocal");
+	//alert("gravarLocal");
 	var table;
 	if (newObj.tipo == 0 || newObj.tipo == 1 ) {
 		table = readLocal(newObj.tipo);
@@ -32,25 +56,58 @@ function pesquisarProfissionais(sprof){
 	var str;
 
 	for (var i = 0; i < table.length; i++) {
-		str = table[i].profissao + " " + table[i].endereco + " " + table[i].num_endereco + " " +
+		str = table[i].profissao + " " + table[i].rua + " " + table[i].num_endereco + " " +
 			  table[i].bairro + " " + table[i].cidade + " " + table[i].uf;
 		str = str.toLowerCase();
 		if ( str.search(sprof.profissao) != -1 && str.search(sprof.regiao) != -1 ) {
  			b.push(table[i]);
   		}
 	}
-	if (b.length > 0) {
+	/*if (b.length > 0) {
 		document.getElementById("error-pesquisa").style.display = 'none';
 	}
 	else {
 		document.getElementById("error-pesquisa").style.display = 'block';
-	}
-	imprimePesquisaProfissionais(b);
-	/*plotaMaps(b);*/
+	}*/
+	//imprimePesquisaProfissionais(b);
+	console.log(b);
+	plotaMaps(b);
 }
+
+
+
+var markers= [];
 
 function plotaMaps(table) {
 
+	deleteMarkers();
+
+	for (var i=0; i<table.length; i++){
+		var marker = new google.maps.Marker({
+			position: new google.maps.LatLng(table[i].endereco.lat, table[i].endereco.lon),
+			title: table[i].nome+' '+table[i].sobrenome,
+			map: map
+		});
+
+		markers.push(marker);
+	}
+
+
+}
+
+function setMapOnAll(map) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+    }
+}
+
+function clearMarkers() {
+        setMapOnAll(null);
+}
+
+function deleteMarkers() {
+        clearMarkers();
+        markers = [];
 }
 
 /*Ler parametros da query da URL*/
@@ -360,7 +417,7 @@ function validaCadastroClient() {
 }
 
 /*Valida dados do fomulário de Profissionais e chama a funcao gravarLocal(); para gravar os dados do cadastro*/
-function validaCadastroProf() {
+async function validaCadastroProf() {
 	var userObj = {
 					id: "",
 					nome: document.getElementById("pnome").value.replace(/\s/g, ""),
@@ -371,12 +428,17 @@ function validaCadastroProf() {
 					data_nascimento: document.getElementById("pdate").value,
 					profissao: document.getElementById("prof").value,
 					telefone: document.getElementById("ptelefone").value.replace(/\s/g, ""),
-					endereco: document.getElementById("pendereco").value,
+					rua: document.getElementById("prua").value,
 					num_endereco: document.getElementById("pnumero").value.replace(/\s/g, ""),
 					bairro: document.getElementById("pbairro").value,
 					cidade: document.getElementById("pcidade").value,
 					uf: document.getElementById("puf").value,
 					cep: document.getElementById("pcep").value,
+					endereco: {
+								titulo: $('#ptitulo').val(),
+								lat: $('#plat').val(),
+								lon: $('#plon').val()
+								},
 					pontuacao: "",
 					tipo: 1,
 					perfil: "",
@@ -384,10 +446,23 @@ function validaCadastroProf() {
 					};
 	
 	var msg = "";
-	alert("Função validaCadastroProf();");
+	//alert("Função validaCadastroProf();");
 	var radio = document.getElementsByName("psexo");
 	var confirma_senha = document.getElementById("pconfirm-senha").value;
 	var resp= true;
+	/*var address = userObj.rua+', '+userObj.num_endereco+' - '+userObj.bairro+', '+userObj.cidade+' - '+userObj.uf; 
+	alert("address= "+address);
+	var user = await pegaCoordenadas(address, userObj);
+	console.log("");
+
+	
+	console.log(coordenadas);
+
+
+	console.log("Titulo: " + coordenadas.titulo);
+	console.log("Lat: "+coordenadas.geometry.location.lat);
+	console.log("Lon: "+coordenadas.geometry.location.lng);*/
+
 
 	for ( var i = 0; i < radio.length; i++) {
 		if (radio[i].checked) {
@@ -419,7 +494,7 @@ function validaCadastroProf() {
 		resp = false;
 	}
 
-	if (userObj.endereco == "") {
+	if (userObj.rua == "") {
 		//document.getElementById('perror-endereco').innerHTML = "<br>Campo Obrigatório!";
 		resp = false;
 	}
@@ -467,13 +542,15 @@ function validaCadastroProf() {
 
 
 	if (resp) {
+		
 		gravarLocal(userObj, 1);
+
 	}
 	else {
 		alert(msg);
 	}
 
-	return resp;
+	return false;
 }	
 
 /*Funcao para pesquisar CEP e preencher campos de endereço dos formulários automáticamente*/
@@ -491,7 +568,7 @@ function trataResposta (id) {
 	if (HTTPReq.readyState == 4) {
 		var result = JSON.parse (HTTPReq.responseText);
 		/*alert(result.cep +'\n'+result.logradouro+'\n'+result.bairro+'\n'+result.localidade+'\n'+result.uf);*/
-		document.getElementById('pendereco').value = result.logradouro;
+		document.getElementById('prua').value = result.logradouro;
 		document.getElementById('pbairro').value = result.bairro;
 		document.getElementById('pcidade').value = result.localidade;
 		document.getElementById('puf').value = result.uf;
@@ -569,6 +646,33 @@ function incluirImg () {
     }
 }
 
+//var address = "Av.+Brasil,20,+Belo+Horizonte,MG";
+function pegaCoordenadas () {
+	var retorno = {};
+	var rua = $('#prua').val();
+	var num = $('#pnumero').val();
+	var bairro = $('#pbairro').val();
+	var cidade = $('#pcidade').val();
+	var uf = $('#puf').val();
+	var address = rua+', '+num+' - '+bairro+', '+cidade+' - '+uf;
+	var map_url = "http://maps.googleapis.com/maps/api/geocode/json?address=" + address;
+	//alert("PEga coordenadas");
+	$.ajax({
+		url: map_url,
+		method: 'GET',
+		success: function (dados){
+			//console.log(dados.results);
+			retorno.titulo = dados.results[0].formatted_address;
+			retorno.geometry = dados.results[0].geometry;
+			$('#ptitulo').val(retorno.titulo);
+			$('#plat').val(retorno.geometry.location.lat);
+			$('#plon').val(retorno.geometry.location.lng);
+		}
+	});
+	//alert("Retorno");
+	//console.log(retorno);
+	return retorno;
+}
 
 
 /********************************************************************************/

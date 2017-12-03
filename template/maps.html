@@ -20,10 +20,11 @@
 
         <!-- Custom styles for this template -->
         <link href="css/freelancer.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/style2.css">
 
     </head>
 
-    <body id="page-top" class="new-pages" style="background-color:#18BC9C">
+    <body id="page-top" class="new-pages" style="background-color:#18BC9C" onload="lerParametro();divrecur();">
     
       <!-- Navigation -->
       <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -73,6 +74,51 @@
           </div>
       </nav>
       
+      <!--<div id="dfiltro" class="row filtro">
+        
+            <div class="col-md-1"></div>
+            <div class="col-md-6"><input class="form-control" type="text" name="" id="prof" ></div>
+            <div class="col-md-5"></div>
+        
+        
+          <div class="col-md-1"></div>
+          <div class="col-md-6"><input class="form-control" type="text" name="" id="regiao" ></div>
+          <div class="col-md-5"></div>
+        
+        
+          <div class="col-md-1"></div>
+          <div class="col-md-4"><button class="btn btn-primary" onclick="lerFiltro();">Buscar</button></div>         
+        
+        
+      </div>-->
+      <div id="dfiltro" class="container filtro">
+        <div class="row">
+          <div class="col-lg-3 col-md-4 col-sm-6">
+            <!--<input class="form-control" type="text" name="" id="prof" >-->
+            <select class="form-control" name="prof" id="prof">
+              <option value="">---Buscar Todos---</option>
+              <option value="pedreiro">Pedreiro</option>
+              <option value="bombeiro hidraulico">Bombeiro Hidráulico</option>
+              <option value="diarista">Diarista</option>
+              <option value="jardineiro">Jardineiro</option>
+              <option value="pintor">Pintor</option>
+              <option value="eletricista">Eletricista</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-4 col-sm-6">
+            <input class="form-control" type="text" name="" id="regiao" placeholder="Região" >
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-2 col-md-3">
+            <button class="btn btn-primary" onclick="lerFiltro();">Buscar</button>
+          </div>
+        </div>
+      </div>
+      
+      
       <!--Mapa-->
       <div class="container-fluid" id="sobre">
         <div class="row">
@@ -90,18 +136,21 @@
 
       <!--Mapa-->
       <script src="js/jquery-3.2.1.min.js"></script>
+
+
       
       <!-- Maps API Javascript -->
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv5-n9oUWXvcd-MQz2XiqEGLYtFR8oOdo&callback=initMap"></script>
-      
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCv5-n9oUWXvcd-MQz2XiqEGLYtFR8oOdo"></script>
+      <!--&callback=initMap-->
       <!-- Caixa de informação -->
       <script src="js/infobox.js"></script>
 
       <!-- Agrupamento dos marcadores -->
       <script src="js/markerclusterer.js"></script>
-
+      
       <!-- Arquivo de inicialização do mapa -->
       <script src="js/mapa.js"></script>
+      
       <!--Fim Mapa-->
 
       
@@ -114,10 +163,13 @@
 
       <!-- Contato Form JavaScript -->
       <script src="js/jqBootstrapValidation.js"></script>
-      <script src="js/Contato_me.js"></script>
+      <script src="js/Contact_me.js"></script>
 
       <!-- Custom scripts for this template -->
       <script src="js/freelancer.min.js"></script>
+
+      <script src="js/localstorage.js"></script>
+      <script src="js/scripts.js"></script>
 
   </body>
 

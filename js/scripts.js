@@ -534,7 +534,19 @@ function alteraImg() {
       fileReader.readAsDataURL(fileToLoad);
     }
 }
-
+//var address = "Av.+Brasil,20,+Belo+Horizonte,MG";
+function pegaCoordenadas (address) {
+	var map_url = "http://maps.googleapis.com/maps/api/geocode/json?address=" + address;
+	$.ajax({
+		url: map_url,
+		method: 'GET',
+		success: function (dados){
+			alert("Sucesso");
+			console.log(dados);
+			return dados;
+		}
+	});
+}
 
 
 /********************************************************************************/

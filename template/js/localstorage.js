@@ -16,9 +16,8 @@ function readLocal (table){
 }
 
 /*CreateLocal - regrava os dados em localstorage. Recebe um array de objetos*/
-/*0 = clientes, 1 = profissionais, 2 = login*/
+/*0 = clientes, 1 = profissionais, 2 = login, 3 = pontos gps*/
 function createLocal(table){
-	alert("createLocal");
 	setLocal();
 	console.log("table");
 	console.log(table);
@@ -29,9 +28,13 @@ function createLocal(table){
 		else if (table[0].tipo == 1) {
 			localStorage.profissionais = JSON.stringify(table);
 		}
+		
 	}
 	else if (table.tipo == 2) {
 		localStorage.login = JSON.stringify(table);
+	}
+	else if (table.tipo == 3) {
+		localStorage.pontos = JSON.stringify(table);
 	}
 }
 
@@ -61,6 +64,9 @@ function setLocal () {
 	}
 	if (localStorage.login == undefined){
 		localStorage.setItem("login", JSON.stringify(""));
+	}
+	if (localStorage.pontos == undefined){
+		localStorage.setItem("pontos", JSON.stringify(""));
 	}
 }
 

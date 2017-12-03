@@ -26,7 +26,7 @@ function abrirInfoBox(id, marker) {
 	idInfoBoxAberto = id;
 }
 
-function carregarPontos() {
+/*function carregarPontos() {
 	
 	$.getJSON('js/pontos.json', function(pontos) {
 		
@@ -66,4 +66,4 @@ function carregarPontos() {
 	
 }
 
-carregarPontos();
+carregarPontos();*/
