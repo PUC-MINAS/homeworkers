@@ -1,8 +1,10 @@
 /*Variáveis Globais*/
 var HTTPReq = new XMLHttpRequest();
+var markers= [];
 
 /*---------------------------------------------*/
 
+/*Aplica recursividade na div de filtro*/
 function divrecur () {
 	$("div#dfiltro").css("z-index", 1000);
 
@@ -28,6 +30,18 @@ function divrecur () {
 	});
 }
 
+/*Aplica recursividade no google maps*/
+function maprecur () {
+	$("div.gm-style-mtc").css("visibility","hidden");
+	var tam_tela = $(window).height();
+	$("div#mapa").css("height",tam_tela);
+
+	$(window).resize(function(){
+		$("div.gm-style-mtc").css("visibility","hidden");
+		var tam_tela = $(window).height();
+		$("div#mapa").css("height",tam_tela);
+	});
+}
 
 
 /*Grava dados em local storage*/
@@ -74,35 +88,24 @@ function pesquisarProfissionais(sprof){
 	plotaMaps(b);
 }
 
-
-
-var markers= [];
-
-var infow;
-
-
 function plotaMaps(table) {
 
 	deleteMarkers();
-	infow = table;
+	//infow = table;
 
-	/*for (var i=0; i<table.length; i++){
+	for (var i=0; i<table.length; i++) {
+		table[i].show = function () {
+			var contents = '<div class="container div-info"><div ><img class="img-info" src="'+this.perfil+'"></div>';
+			contents += '<h4 class="h4">'+this.nome+' '+this.sobrenome+'</h3>';
+			contents += '<p class="info-prof">Profissão: '+this.profissao+'</p>';
+			contents += '<p class="info-endereco">'+this.endereco.titulo+'</p>';
+			contents += '<p class="info-botao"><button class="btn btn-light">Ver Perfil</button></p>';
+			contents += '</div>';
 
-		var marker = new google.maps.Marker({
-			position: new google.maps.LatLng(table[i].endereco.lat, table[i].endereco.lon),
-			title: table[i].nome+' '+table[i].sobrenome,
-			map: map
-		});		
-		
 
-		markers.push(marker);
-	}*/
-	for (var i=0; i<infow.length; i++) {
-		infow[i].show = function () {
-			var contents = this.nome+' '+this.sobrenome+' - '+this.profissao;
-			//var contents = '<div class="" '
 			var infowindow = new google.maps.InfoWindow({
-	    		content: contents
+	    		content: contents,
+	    		maxWidth: 200
 	  		});
 			var marker = new google.maps.Marker({
 				position: new google.maps.LatLng(this.endereco.lat, this.endereco.lon),
@@ -114,7 +117,8 @@ function plotaMaps(table) {
 				infowindow.open(map, marker);
 			});	
 		}
-		infow[i].show();
+		table[i].show();
+		console.log(table[i].show);
 	}
 
 

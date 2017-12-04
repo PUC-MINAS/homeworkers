@@ -27,6 +27,10 @@ div#dfiltro {
     position: fixed;
  }
 
+div#map {
+    position: fixed;
+}
+
 .clear { 
     clear: both;
 }
