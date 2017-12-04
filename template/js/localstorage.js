@@ -70,5 +70,8 @@ function setLocal () {
 	}
 }
 
-
+/*Deleta login do localstorage */
+function deleteLogin () {
+	localStorage.removeItem("login");
+}
 
