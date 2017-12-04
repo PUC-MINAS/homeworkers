@@ -78,18 +78,43 @@ function pesquisarProfissionais(sprof){
 
 var markers= [];
 
+var infow;
+
+
 function plotaMaps(table) {
 
 	deleteMarkers();
+	infow = table;
 
-	for (var i=0; i<table.length; i++){
+	/*for (var i=0; i<table.length; i++){
+
 		var marker = new google.maps.Marker({
 			position: new google.maps.LatLng(table[i].endereco.lat, table[i].endereco.lon),
 			title: table[i].nome+' '+table[i].sobrenome,
 			map: map
-		});
+		});		
+		
 
 		markers.push(marker);
+	}*/
+	for (var i=0; i<infow.length; i++) {
+		infow[i].show = function () {
+			var contents = this.nome+' '+this.sobrenome+' - '+this.profissao;
+			//var contents = '<div class="" '
+			var infowindow = new google.maps.InfoWindow({
+	    		content: contents
+	  		});
+			var marker = new google.maps.Marker({
+				position: new google.maps.LatLng(this.endereco.lat, this.endereco.lon),
+				title: this.nome+' '+this.sobrenome,
+				map: map
+			});
+			markers.push(marker);
+			marker.addListener('click', function(){
+				infowindow.open(map, marker);
+			});	
+		}
+		infow[i].show();
 	}
 
 
