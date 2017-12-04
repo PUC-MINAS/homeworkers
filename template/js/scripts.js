@@ -88,6 +88,7 @@ function pesquisarProfissionais(sprof){
 	plotaMaps(b);
 }
 
+/*função que plota pontos no mapa*/
 function plotaMaps(table) {
 
 	deleteMarkers();
@@ -124,16 +125,19 @@ function plotaMaps(table) {
 
 }
 
+/*seta markers no mapa*/
 function setMapOnAll(map) {
     for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(map);
     }
 }
 
+/*Limpa pontos da tela OBS: não exclui os pontos */
 function clearMarkers() {
         setMapOnAll(null);
 }
 
+/*Deleta todos os pontos */
 function deleteMarkers() {
         clearMarkers();
         markers = [];
@@ -187,27 +191,6 @@ function lerFiltro () {
 
 
 
-/*Imprime na tela de pesquisa dados do profissional*/
-function imprimePesquisaProfissionais(userObj) {
-	var txt = "";
-	for (var i=0; i<userObj.length; i++) {
-		txt += "<a href='perfil.html?perfil=" + userObj[i].id + "' class='a-noformat' ><div class='div-lista'><img src='' alt=''><br>Nome: <span id='nome' >"+
-				userObj[i].nome+"</span> <span id='sobrenome'>"+
-				userObj[i].sobrenome+"</span><br>Profissão: <span id='prof'>"+
-				userObj[i].profissao+"</span><br>Pontuação: <span id='pontuacao'>"+
-				userObj[i].pontuacao+"</span><br>Endereço: <span id='endereco'>"+
-				userObj[i].endereco+"</span>, <span id='num_endereco'>"+
-				userObj[i].num_endereco+"</span>, <span id='bairro'>"+
-				userObj[i].bairro+"</span>, <span id='cidade'>"+
-				userObj[i].cidade+"</span> - <span id='uf'>"+
-				userObj[i].uf+"</span><br>Telefone: <span id='telefone'>"+
-				userObj[i].telefone+"</span><br>E-mail: <span id='email'>"+
-				userObj[i].email+"</span></div></a>";
-	}
-	
-	document.getElementById("p-pesq").innerHTML = txt;
-}
-
 /*Funcao para logar no site*/
 function entrar () {
 	var logObj = {
@@ -218,7 +201,7 @@ function entrar () {
 	logObj.email = document.getElementById("email").value;
 	logObj.senha = document.getElementById("senha").value;
 
-	var obj = pesquisarLocal(logObj);
+	var obj = pesquisarLocal('email', logObj.email);
 			
 	if (obj != null) {
 		if (obj.email == logObj.email && obj.senha == logObj.senha){
@@ -240,12 +223,14 @@ function entrar () {
 	}			
 }
 
+/*Função para sair*/
 function sair () {
 	deleteLogin();
 	alert("Volte Sempre!");
 	window.location.assign("index.html");
 }
 
+/*Função para gravar */
 function setLogin (login) {
 	alert("setLogin");
 	console.log(login);
@@ -253,13 +238,44 @@ function setLogin (login) {
 	window.location.assign("perfil.html");
 }
 
-function deleteLogin () {
-	localStorage.removeItem("login");
+/*Pesquisa dados de um usuário em localstorage atraves de um item informado*/
+function pesquisarLocal(item, valor) {
+	var table_c = readLocal(0);
+	var table_p = readLocal(1);
+	//pesquisar por id
+	if (item == 'id'){
+		for (var i=0; i < table_c.length; i++) {
+			if ( valor == table_c[i].id) {
+				return  table_c[i] ;
+			}
+		}
+		for (var i=0; i < table_p.length; i++) {
+			if ( valor == table_p[i].id) {
+				return table_p[i];
+			}
+		}
+	}
+	//pesquisar por email
+	if (item == 'email') {
+		for (var i=0; i < table_c.length; i++) {
+			if ( valor == table_c[i].email) {
+				return  table_c[i] ;
+			}
+		}
+		for (var i=0; i < table_p.length; i++) {
+			if ( valor == table_p[i].email) {
+				return table_p[i];
+			}
+		}
+	}
+
+	return false;	
 }
 
+/*Função que checa se usuário está logado */
 function checkLogin () {
 	var log = readLocal(2);
-	var login = pesquisarLocal(log);
+	var login = pesquisarLocal('email' ,log.email);
 	if (log.email == login.email && log.senha == login.senha) {
 		return true;
 	}
@@ -268,6 +284,7 @@ function checkLogin () {
 	}
 }
 
+/*Ler parametro perfil para mostar informações de outro usuário */
 function lerParametroPerfil () {
 	console.log("Entou em lerParametroPerfil");
 	var params = new URLSearchParams(document.location.search.substring(1));
@@ -275,6 +292,16 @@ function lerParametroPerfil () {
 	console.log("perfil=", perfil);
 	return perfil;
 }
+
+function changeLoginButton (){
+	if (checkLogin()){
+		var login = readLocal(2);
+		var user = pesquisarLocal('email' ,log.email);
+		
+	}
+}
+
+
 
 function perfil() {
 	console.log("entrou funcao perfil");
@@ -573,7 +600,8 @@ async function validaCadastroProf() {
 	if (resp) {
 		
 		gravarLocal(userObj, 1);
-
+		alert("Cadastro Efetuado com Sucesso!");
+		setLogin();
 	}
 	else {
 		alert(msg);
@@ -765,17 +793,23 @@ function cadastrar(){
 }
 
 
-/*Pesquisa dados em localstorage --- incompleta*/
-/*userObj é um objeto contando email e senha*/
-function pesquisarLocal(userObj) {
-	var table = JSON.parse(localStorage.clientes);
-	table = table.concat(JSON.parse(localStorage.profissionais));
-
-	for (var i=0; i < table.length; i++) {
-		if (userObj.email == table[i].email) {
-			return table[i];
-		}
+/*Imprime na tela de pesquisa dados do profissional*/
+function imprimePesquisaProfissionais(userObj) {
+	var txt = "";
+	for (var i=0; i<userObj.length; i++) {
+		txt += "<a href='perfil.html?perfil=" + userObj[i].id + "' class='a-noformat' ><div class='div-lista'><img src='' alt=''><br>Nome: <span id='nome' >"+
+				userObj[i].nome+"</span> <span id='sobrenome'>"+
+				userObj[i].sobrenome+"</span><br>Profissão: <span id='prof'>"+
+				userObj[i].profissao+"</span><br>Pontuação: <span id='pontuacao'>"+
+				userObj[i].pontuacao+"</span><br>Endereço: <span id='endereco'>"+
+				userObj[i].endereco+"</span>, <span id='num_endereco'>"+
+				userObj[i].num_endereco+"</span>, <span id='bairro'>"+
+				userObj[i].bairro+"</span>, <span id='cidade'>"+
+				userObj[i].cidade+"</span> - <span id='uf'>"+
+				userObj[i].uf+"</span><br>Telefone: <span id='telefone'>"+
+				userObj[i].telefone+"</span><br>E-mail: <span id='email'>"+
+				userObj[i].email+"</span></div></a>";
 	}
-
-	return false;	
+	
+	document.getElementById("p-pesq").innerHTML = txt;
 }
