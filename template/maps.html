@@ -24,7 +24,7 @@
 
     </head>
 
-    <body id="page-top" class="new-pages" style="background-color:#18BC9C" onload="lerParametro();divrecur();">
+    <body id="page-top" class="new-pages" style="background-color:#18BC9C" onload="lerParametro();divrecur();maprecur();">
     
       <!-- Navigation -->
       <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -63,7 +63,8 @@
                           </p>                      
                           <li class="dropdown-header">Senha
                           </li>
-                          <input class="form-control" id="phone" type="password" placeholder="Senha" required data-validation-required-message="Por favor entre com sua senha.">
+                          <input class="form-control" id="senha" type="password" placeholder="Senha" required data-validation-required-message="Por favor entre com sua senha.">
+                          <button class="btn btn-primary" onclick="entrar();">Entrar</button>
                           <p class="help-block text-danger">
                           </p>
                       </ul>
