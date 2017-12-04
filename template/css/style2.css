@@ -22,3 +22,11 @@ input#pdate {
     color: #495057;
     opacity: 0.75;
 }
+
+div#dfiltro {
+    position: fixed;
+ }
+
+.clear { 
+    clear: both;
+}
